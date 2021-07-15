@@ -1,0 +1,54 @@
+If you are seeking to make a complete clone of the CS Circles site, this
+requires contacting us for permission. We will give you a file called something
+like computersciencecircles.wordpress.yyyy-mm-dd.xml and these are the steps
+needed to install its contents.
+
+
+Installing CS Circles Content
+
+- Get latest cscircles repo ("git pull")
+
+- Plugins->Installed Plugins: activate Python in a Box, Polylang, LaTeX, WordPress Importer if not already activated
+
+- Important! Make sure all 4 of the plugins just mentioned are activated.
+
+- double-check that pybox 2011 child theme is activated (see README.md)
+
+File Import
+
+The wordpress mechanism requires uploading the .xml file first, which needs a directory permission.
+
+- create wp-content/uploads and make it webserver writeable (either chmod a+rw it, or sudo chgrp apache it followed by chmod g+rw)
+
+- go to Tools->Import->WordPress, upload the .xml file
+
+- Assign all posts to your admin account; not necessary to import attachments
+
+- ignore errors (related to attachments/images, not important)
+
+Settings
+
+- Settings->Reading, change front page to "0: Hello!"
+
+- Settings->Languages->Settings Tab, (i) set default language to English (ii) turn off "Detect browser language"
+
+- Appearance->Menus, pick the English menu, at bottom check "Primary Menu English"
+
+- [admin menu in top, 3 spots from right]->"Rebuild Databases", press button (you should see lots of output)
+
+Check if it worked:
+
+- [user menu in top right corner]->"My progress" 
+
+You should see about 100 exercises grouped by lesson. Try solving some problems and visit it again.
+
+
+Offline LaTeX (optional)
+
+- Go to Settings -> WP LaTeX
+
+- create wp-content/latex (same instructions as above for "wp-content/uploads")
+
+- switch from the server to dvipng or dvips+convert
+
+- check out Geometric Mean and Gravity in lesson 7b to see if it is showing formulas
