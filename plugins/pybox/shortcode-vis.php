@@ -18,7 +18,7 @@ function pyVisHandler($options, $the_content) {
   //return $res;
   $tag = 'iframe'; $urlname = 'src';
   //$tag = 'object'; $urlname = 'data'; // doesn't seem to be different
-  $url = content_url('plugins/pybox/') . 'OnlinePythonTutor3-cemc/iframe-embed.html#'
+  $url = content_url('plugins/pybox/') . 'opt3/iframe-embed.html#'
     .'code='.urlencode($content)
     .'&cumulative=false&heapPrimitives=false&drawParentPointers=false&textReferences=false&showOnlyOutputs=false&py=3&curInstr=0&resizeContainer=true&highlightLines&width='.$width.'&rightStdout=1';
   return 

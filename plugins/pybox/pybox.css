@@ -1,12 +1,11 @@
-
 /*********************** general stuff **********************/
 
 .ab-empty-item {
-color: darkgreen !important;
+    color: #FFFFFF !important;
 }
 
 #wp-admin-bar-updates {
-display: none;
+    display: none;
 }
 
 .hide-if-no-customize {
@@ -14,9 +13,9 @@ display: none;
 }
 
 input.wpcf7-text, textarea.wpcf7-textarea {
-  width: 100%;
-  padding: 0px;
-  margin: 2px 0px;
+    width: 100%;
+    padding: 0px;
+    margin: 2px 0px;
 }
 
 #pylangswitcher {
@@ -31,16 +30,24 @@ input.wpcf7-text, textarea.wpcf7-textarea {
     bottom: 5px;
 }
 
-.prebox { overflow-x: auto; }
+.prebox {
+    overflow-x: auto;
+}
 
-.miny { font-size: 60%; }
+.miny {
+    font-size: 60%;
+}
+
 #content img.latex {
     margin: 4px;
     background: none;
 }
 
 /* eg, lesson 15C */
-#content table.minyspace tr * { padding: 2px; border-top: 1px solid #E7E7E7; }
+#content table.minyspace tr * {
+    padding: 2px;
+    border-top: 1px solid #E7E7E7;
+}
 
 .userpage img {
     height: 32px;
@@ -54,46 +61,54 @@ input.wpcf7-text, textarea.wpcf7-textarea {
 }
 
 #content .userpage td {
-	padding: 1px;
+    padding: 1px;
 }
 
 .pybox .heading {
-     text-align: center;
-     font-size: 110%;
+    text-align: center;
+    font-size: 110%;
 }
+
 .pybox .heading .type {
     font-style: italic;
 }
+
 .pybox .heading .title {
     font-style: normal;
     font-weight: bold;
 }
 
 .console .heading .type {
-	display: none !important;
+    display: none !important;
 }
 
 .pybox {
     background-color: #E0E0FF;
 }
+
 /*.pybox.modeNeutral {
     background-color: #E0E0FF;
 }*/
 .pybox.modeInternalError {
     background-color: #FFFF00;
 }
+
 .pybox.modeCorrect {
     background-color: #80FF80;
 }
+
 .pybox.modeNeutral .heading {
     background-color: #C8C8FF;
 }
+
 .pybox.modeInternalError .heading {
     background-color: #D8D800;
 }
+
 .pybox.modeCorrect .heading {
     background-color: #30DD30;
 }
+
 #content .pybox .heading code {
     background: none;
 }
@@ -127,9 +142,9 @@ input.wpcf7-text, textarea.wpcf7-textarea {
 }
 
 #content .history-tablette {
-    vertical-align: middle; 
-    display: inline-block; 
-    width: auto; 
+    vertical-align: middle;
+    display: inline-block;
+    width: auto;
     border: none;
 }
 
@@ -151,9 +166,9 @@ input.wpcf7-text, textarea.wpcf7-textarea {
 }
 
 .progress-selector {
-    background-color:#EEF; 
-    border: 1px solid blue; 
-    border-radius: 5px; 
+    background-color: #EEF;
+    border: 1px solid blue;
+    border-radius: 5px;
     padding: 5px;
 }
 
@@ -162,7 +177,6 @@ input.wpcf7-text, textarea.wpcf7-textarea {
 }
 
 /********************** simple collapsers ********************/
-
 
 
 /* USAGE:
@@ -178,26 +192,26 @@ opening one will close the other open ones
 */
 
 .collapseContain {
-  margin: 0px;
+    margin: 0px;
 }
 
 .collapseHead {
-	border-radius          : 4px;
-	-moz-border-radius     : 4px;
-	-webkit-border-radius  : 4px;
-	-webkit-border-radius  : 4px;
-	border: 1px solid #55E;
-	font: bold 14px 'Segoe UI', 'Lucida Grande', 'Arial', sans-serif;
-	background: #377AD0;
-	background: -moz-linear-gradient(top ,#52A8E8, #377AD0);
-	background: -webkit-gradient(linear, left top, left bottom , from(#52A8E8), to(#305DA9));
-	background: -webkit-linear-gradient(top , #52A8E8, #377AD0);
-	background: -o-linear-gradient(top , #52A8E8, #377AD0);
-	padding: 4px 10px;
-	color: #FFF !important;
-	/*border: 1px solid #3B592A;*/
-	text-shadow: 0 -1px 0 #3B592A;
-	margin: 0px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #55E;
+    font: bold 14px 'Segoe UI', 'Lucida Grande', 'Arial', sans-serif;
+    background: #377AD0;
+    background: -moz-linear-gradient(top, #52A8E8, #377AD0);
+    background: -webkit-gradient(linear, left top, left bottom, from(#52A8E8), to(#305DA9));
+    background: -webkit-linear-gradient(top, #52A8E8, #377AD0);
+    background: -o-linear-gradient(top, #52A8E8, #377AD0);
+    padding: 4px 10px;
+    color: #FFF !important;
+    /*border: 1px solid #3B592A;*/
+    text-shadow: 0 -1px 0 #3B592A;
+    margin: 0px;
 }
 
 .collapseHead code {
@@ -214,6 +228,7 @@ opening one will close the other open ones
     border-radius: 4px;
     padding: 1px;
 }
+
 .quoth:hover {
     background: blue;
     color: white;
@@ -221,26 +236,29 @@ opening one will close the other open ones
 }
 
 .collapseHead .icon {
-	display: inline-block;
-	border: none;
-	background: url(files/ui-icon-whitest.png);
-	background-position: -64px -16px;
-	width: 16px;
-	height: 16px;
-	position: relative;
-	top: 2px;
+    display: inline-block;
+    border: none;
+    background: url(files/ui-icon-whitest.png);
+    background-position: -64px -16px;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
 }
+
 .collapseBody {
     position: relative;
-    display:block;
+    display: block;
     border: 1px solid #AAF;
     border-radius: 4px;
     padding: 2px 4px;
     background-color: white;
 }
+
 .collapseContain.hiding .collapseBody {
-    display:none;
+    display: none;
 }
+
 .collapseContain.hiding .collapseHead .icon {
     background-position: -32px -16px;
 }
@@ -252,32 +270,36 @@ opening one will close the other open ones
 
 /******************************* mail page *****************************/
 .mailform {
-	text-align: center;
+    text-align: center;
 }
-
 
 /************************** locator: buttons near the bottom to next, prev lessons *******/
 .locator, .locator td {
     font-weight: 700;
-    color:green;
+    color: green;
 }
+
 div.locator {
     padding-bottom: 4px;
-  /*margin-left: 7.6%;
-    margin-right: 7.6%;*/
+    /*margin-left: 7.6%;
+      margin-right: 7.6%;*/
 }
+
 table.locator {
     width: 100%;
 }
+
 td.locator {
     text-align: center;
 }
+
 .nextlesson {
     color: #0f0;
     border: 1px solid #0f0;
     border-radius: 4px;
     padding: 2px;
 }
+
 a.locator {
     color: white;
     background: green;
@@ -287,9 +309,11 @@ a.locator {
     margin: 1px;
     border: 3px outset palegreen;
 }
+
 a.locator:hover {
     text-decoration: none;
 }
+
 a.locator:hover {
     border-style: inset;
 }
@@ -298,22 +322,22 @@ a.locator:hover {
     cursor: pointer;
 }
 
-
-
 /***************** flexigrid ***********************/
 #content .flexigrid * {
     font-size: 11px;
     line-height: 14px;
 }
+
 #content .flexigrid td {
     padding: 0px;
 }
+
 #content .flexigrid table {
     width: auto;
 }
+
 #content .flexigrid .hDivBox th,
-#content .flexigrid .hDivBox th div
- {
+#content .flexigrid .hDivBox th div {
     overflow: hidden;
 }
 
@@ -354,11 +378,12 @@ a.locator:hover {
 /*********************** pyWarn shortcode *********************************/
 
 .pywarnleft {
-    vertical-align:middle; 
-    width:90px;
+    vertical-align: middle;
+    width: 90px;
 }
+
 .pywarnright {
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 table.pywarn {
@@ -369,8 +394,8 @@ table.pywarn {
 }
 
 #content .pywarn img {
-    float:left;
-    margin:5px;
+    float: left;
+    margin: 5px;
 }
 
 #content .pywarn .pybox {
@@ -387,7 +412,7 @@ table.pywarn {
     border-radius: 3px;
     padding: 1px;
     font-size: 90%;
-    white-space:nowrap;
+    white-space: nowrap;
     color: blue;
     margin-left: 1px;
     margin-right: 1px;
@@ -407,7 +432,7 @@ table.pywarn {
 
 .hintbox {
     display: none;
-    background-color:yellow;
+    background-color: yellow;
     width: 320px;
     font-size: 16px;
     border-radius: 5px;
@@ -418,7 +443,7 @@ table.pywarn {
     -webkit-box-shadow: 5px 5px 5px #444;
     box-shadow: 5px 5px 5px #444;
     cursor: move;
-    z-index:100000; /* on top of resizable-handles */
+    z-index: 100000; /* on top of resizable-handles */
 }
 
 .hintbox:hover {
@@ -458,8 +483,9 @@ table.pywarn {
 }
 
 .widepophint {
-	width: 500px;
+    width: 500px;
 }
+
 /********************* rest: pybox shortcode and friends ***************/
 #content .pybox {
     padding: 5px;
@@ -470,10 +496,25 @@ table.pywarn {
     width: auto;
     position: relative;
 }
-#content .pybox p { margin-top: 0px; margin-bottom: 0px;}
-#content .pybox pre { padding: 10px; margin: 0px 0px 0px 0px; }
-#content .pybox hr { background-color: #F9F9F9; height: 5px;}
-#content .pybox input { margin: 0px; } 
+
+#content .pybox p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#content .pybox pre {
+    padding: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+#content .pybox hr {
+    background-color: #F9F9F9;
+    height: 5px;
+}
+
+#content .pybox input {
+    margin: 0px;
+}
 
 /********************* short answer *******************/
 #content .pybox input[type="text"] {
@@ -491,32 +532,32 @@ img.pycheck {
     float: right;
     position: relative;
     right: -15px;
-    top: -10px; 
+    top: -10px;
 }
 
 /********************** scramble? ********************/
 ul.pyscramble {
     position: relative;
-    margin: 0;  
+    margin: 0;
     display: block;
-    padding-left: 0; 
-    list-style: none; 
-    list-style-type: none; 	
-/*    width: 99%; */
+    padding-left: 0;
+    list-style: none;
+    list-style-type: none;
+    /*    width: 99%; */
 }
 
 li.pyscramble {
-    position: relative; 
-    margin: 0 0 -1px 0; 
+    position: relative;
+    margin: 0 0 -1px 0;
     margin-left: 0;
     padding-left: 0;
     list-style: none;
     background: #ddd;
-    border: 1px solid #bbb; 
-/*    width: 100%; */
+    border: 1px solid #bbb;
+    /*    width: 100%; */
     line-height: 1.2em;
-    cursor: move;	
-    padding: 5px; 
+    cursor: move;
+    padding: 5px;
     white-space: pre;
 }
 
@@ -529,11 +570,12 @@ li.pyscramble {
     white-space: pre;
     height: 100%;
     width: 100%;
-    padding: 2px 3px; 
+    padding: 2px 3px;
 }
+
 #content .pybox textarea {
     box-sizing: border-box;
-    -webkit-box-sizing:border-box;
+    -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
 }
@@ -545,28 +587,30 @@ ie7 #content .pybox textarea {
 }
 
 
-
 #content .pybox .ui-resizable-handle:hover {
     background-color: blue;
 }
+
 #content .show-resize-handle .ui-resizable-handle:hover {
     background-color: blue;
 }
+
 #content .pybox .pyboxTextwrap {
-/*    margin:0px 7px 8px 0px;*/
-    padding:0px;
+    /*    margin:0px 7px 8px 0px;*/
+    padding: 0px;
 }
 
-#content .pybox .pyboxTextwrap { 
+#content .pybox .pyboxTextwrap {
     position: relative;
 }
 
 
-#content .pyboxCode.RW, 
+#content .pyboxCode.RW,
 #content .pyboxInput {
     width: 100%;
 }
-#content .pyboxCode, 
+
+#content .pyboxCode,
 #content .pyboxInput {
     overflow-y: auto;
     overflow-x: auto;
@@ -576,43 +620,65 @@ ie7 #content .pybox textarea {
 /******************** rich editors ******************************/
 
 /****************** action buttons inside each pybox *****************/
-#content .pyboxbuttons { margin: 5px 0px 5px 0px; }
-#content .selectmore   { margin: 5px 0px 0px 0px; }
-#content .pyboxbuttons td { margin: 0px; }
+#content .pyboxbuttons {
+    margin: 5px 0px 5px 0px;
+}
+
+#content .selectmore {
+    margin: 5px 0px 0px 0px;
+}
+
+#content .pyboxbuttons td {
+    margin: 0px;
+}
+
 #content .pyboxbuttons, #content .pyboxbuttons td {
-    padding: 0; 
+    padding: 0;
     text-align: center;
 }
+
 #content .pyboxbuttons table {
-    border: none;	
+    border: none;
     table-layout: fixed;
 }
+
 #content .pyboxbuttons select,
 #content .pyboxbuttons option {
     background-color: #fafafa;
     min-width: 100%;
 }
+
 #content .pyboxbuttons select {
     border: 1px solid #ddd;
 }
-#content .pyboxbuttons input, 
+
+#content .pyboxbuttons input,
 #content .pyboxbuttons select,
 #content .pyboxbuttons option {
     font-size: 16px;
     max-width: 250px;
     font-weight: 700;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; /* firefox needed this especiallly */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* firefox needed this especiallly */
 }
 
 /*************** line separating input from results**********************/
-#main #content .pbresults { border-top: 5px solid white; }
-#main #content .pbresults:empty, #main #content .pbresults.avoidline { border-top: none; }
+#main #content .pbresults {
+    border-top: 5px solid white;
+}
+
+#main #content .pbresults:empty, #main #content .pbresults.avoidline {
+    border-top: none;
+}
 
 /**************** grader *************/
-.gmi { white-space: pre-wrap; }
+.gmi {
+    white-space: pre-wrap;
+}
 
 /**************** epilogue placeholder *********************/
-.epilogue { display: none; }
+.epilogue {
+    display: none;
+}
 
 /****************** action-send-message *********************/
 
@@ -630,11 +696,11 @@ ie7 #content .pybox textarea {
 }
 
 table.helpControls {
-    border: none; 
+    border: none;
 }
 
 .helpOuter {
-    padding: 5px; 
+    padding: 5px;
     background: url(files/rbw.png) repeat;
 }
 

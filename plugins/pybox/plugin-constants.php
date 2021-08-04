@@ -1,6 +1,6 @@
 <?php
 
-  // update whenever old visualizations might no longer be valid
+// update whenever old visualizations might no longer be valid
 define('VIZ_VERSION', 1);
 
 // P: path constant

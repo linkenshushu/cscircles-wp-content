@@ -103,7 +103,7 @@ ORDER BY $sortString ID DESC " . $limit;
    foreach ($wpdb->get_results( $prep, ARRAY_A ) as $r) {
      $cell = array();
      if ($u == "all") {
-       $cell[__t('userid')] = str_replace(' ', "<br>", userString($r['userid'], true));
+       $cell[__t('userid')] = str_replace(' ', "<br>", userNickOrUserLogin($r['userid'], true));
      }
      $p = $r['problem'];
      if (array_key_exists($p, $problemTable)) 

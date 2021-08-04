@@ -99,7 +99,7 @@ $limit
      $cell = array();
      $sid = $r['ID'];
      $cell['ID'] = $sid;
-     $cell['info'] = userString($sid);
+     $cell['info'] = userNickOrUserLogin($sid);
      $na = '<i>n/a</i>';
      $cell[__t('last correct')] = formatCode($r['lastCode']);
      $cell[__t('last time')] = formatTime($r['lastTime']);

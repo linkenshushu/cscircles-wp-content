@@ -4,14 +4,15 @@ require_once("include-to-load-wp.php");
 
 $page = NULL;
 if (array_key_exists("page", $_GET)) {
-  $page = get_post($_GET["page"]);
- }
- else if (array_key_exists("slug", $_GET)) {
-   $page = get_page_by_path($_GET["slug"]);
- }
+    $page = get_post($_GET["page"]);
+} else if (array_key_exists("slug", $_GET)) {
+    $page = get_page_by_path($_GET["slug"]);
+}
 
-if ($page == NULL)
-  { echo "Page not found"; return; }
+if ($page == NULL) {
+    echo "Page not found";
+    return;
+}
 
 $content = $page->post_content;
 

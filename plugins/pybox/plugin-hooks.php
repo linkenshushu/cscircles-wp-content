@@ -33,12 +33,12 @@ function pyBoxHead() {
   
   echo sprintf("var SUBMITURL = '%s';\n", USUBMIT);
   echo sprintf("var SETCOMPLETEDURL = '%s';\n", USETCOMPLETED);
-  echo sprintf("var CONSOLEURL = '%s';\n", cscurl('console'));
+  echo sprintf("var CONSOLEURL = '%s';\n", csCurlRouter('console'));
   echo sprintf("var FILESURL = '%s';\n", UFILES);
   echo sprintf("var HISTORYURL = '%s';\n", UHISTORY);
-  echo sprintf("var VISUALIZEURL = '%s';\n", cscurl('visualize'));
+  echo sprintf("var VISUALIZEURL = '%s';\n", csCurlRouter('visualize'));
   echo sprintf("var MESSAGEURL = '%s';\n", UMESSAGE);
-  echo sprintf("var MAILURL = '%s';\n", cscurl('mail'));
+  echo sprintf("var MAILURL = '%s';\n", csCurlRouter('mail'));
   echo sprintf("var DEFAULTTIMEOUTMS = '%s';\n", (WALLFACTOR*1 + WALLBUFFER)*1000);
   echo sprintf("var PB_LANG4 = '%s';\n", currLang4());
 

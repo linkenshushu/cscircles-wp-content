@@ -39,7 +39,7 @@ echo sprintf(    __t('Computer Science Circles is a free service of the <a %1$s>
   <?php echo __t('200 University Avenue West');?> |
   <?php echo __t('Waterloo, Ontario, Canada N2L 3G1');?> |
   <?php echo __t('Phone: 519 888 4808');?> |
-  <a href="<?php echo cscurl('contact'); ?>"><?php 
+  <a href="<?php echo csCurlRouter('contact'); ?>"><?php
   echo __t('contact us');?></a>
    </div>
 

@@ -11,115 +11,141 @@ Version:0.0
 */
 
 
-p.iehaxx {height: 1px;}
+p.iehaxx {
+    height: 1px;
+}
 
 /* old? dd.slide {overflow-y: scroll;} */
 
-#page, .one-column #page {max-width: 1000px; margin: auto;}
-#page {box-shadow: 0px 0px 15px #777;}
+#page, .one-column #page {
+    max-width: 1000px;
+    margin: auto;
+}
+
+#page {
+    box-shadow: 0px 0px 15px #777;
+}
 
 
 /* based on http://peterned.home.xs4all.nl/examples/csslayout1.html */
 
-html,body {
-	margin:0;
-	padding:0;
-	height:100%; /* needed for container min-height */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* needed for container min-height */
 }
+
 #primary, #content, article, .entry-content,
 #page {
-	position:relative; /* needed for footer positioning*/
-	margin:0 auto; /* center, not in IE5 */
-	height:auto !important; /* real browsers */
-	height:100%; /* IE6: treaded as min-height*/
-	min-height:100%; /* real browsers */
+    position: relative; /* needed for footer positioning*/
+    margin: 0 auto; /* center, not in IE5 */
+    height: auto !important; /* real browsers */
+    height: 100%; /* IE6: treaded as min-height*/
+    min-height: 100%; /* real browsers */
 }
+
 #main {
     padding: 0px;
     padding-bottom: 100px; /* bottom padding for footer */
 }
+
 #colophon {
-	position:absolute;
-	width:100%;
-	bottom: 28px; /* 72px better in chrome. no idea why it works. dave jan 25 2012 */
-	height: 79px;
+    position: absolute;
+    width: 100%;
+    bottom: 28px; /* 72px better in chrome. no idea why it works. dave jan 25 2012 */
+    height: 79px;
 }
+
 #colophon img {
-	position: relative;
-	top: -6px;
+    position: relative;
+    top: -6px;
 }
 
 #site-generator {
-	max-width: 1000px;
-	width: 100%;
-	bottom: 0;
-	position: static;
+    max-width: 1000px;
+    width: 100%;
+    bottom: 0;
+    position: static;
 }
 
-#main {clear: both;} /* this is important for the menu to work */
+#main {
+    clear: both;
+}
+
+/* this is important for the menu to work */
 
 /* stuff previously present in default 2011 theme but removed with no apparent ill effect*/
 
-footer, header {display: inherit;}
-#primary {float: inherit;}
-#branding {position: inherit;}
-#colophon {clear: inherit;}
+footer, header {
+    display: inherit;
+}
+
+#primary {
+    float: inherit;
+}
+
+#branding {
+    position: inherit;
+}
+
+#colophon {
+    clear: inherit;
+}
 
 caption, th, td {
-	font-weight: inherit;
-	text-align: inherit;
+    font-weight: inherit;
+    text-align: inherit;
 }
 
 /* dave aug 28 */
-img
-{z-index: 10; background: white;}
-.pywarn img, #colophon img, img.pycheck
-{background: none;}
+img {
+    z-index: 10;
+    background: white;
+}
+
+.pywarn img, #colophon img, img.pycheck {
+    background: none;
+}
 
 
 .one-column.singular .entry-meta .edit-link a {
-	position: absolute;
-	left: -50px; /* changed dave july 29 2011 */
-	top: 0px; /* changed dave july 29 2011 */
+    position: absolute;
+    left: -50px; /* changed dave july 29 2011 */
+    top: 0px; /* changed dave july 29 2011 */
 }
 
 /* Make sure the logo and search form do not collide */
 .one-column #branding #searchform {
-	right: 80px;
-	top: 50px; /* dave nov 9 2011 */
+    right: 80px;
+    top: 50px; /* dave nov 9 2011 */
 }
-
-
-
 
 
 /* =Global
 ----------------------------------------------- */
 
 /* fonts changed dave sept 25 */
-body, html, input, textarea
-{
-	color: #373737;
-	font-size: 16px;
-	font-weight: 400;  
-	line-height: 26px;
+body, html, input, textarea {
+    color: #373737;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
 }
 
 body, html {
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* from http://fonts.googleapis.com/css?family=Droid+Sans+Mono */
 @font-face {
-  font-family: 'Droid Sans Mono';
-  font-style: normal;
-  font-weight: normal;
-  src: url(fonts/dsm.eot);
-  src: local('Droid Sans Mono'), local('DroidSansMono'), 
-	url(fonts/dsm.eot) format('embedded-opentype'), 
-	url(fonts/dsm.woff) format('woff');
+    font-family: 'Droid Sans Mono';
+    font-style: normal;
+    font-weight: normal;
+    src: url(fonts/dsm.eot);
+    src: local('Droid Sans Mono'), local('DroidSansMono'),
+    url(fonts/dsm.eot) format('embedded-opentype'),
+    url(fonts/dsm.woff) format('woff');
 }
-
 
 
 textarea, .pyscramble, .pyboxCode, .pyboxInput, pre, code, tt, .mono {
@@ -127,37 +153,40 @@ textarea, .pyscramble, .pyboxCode, .pyboxInput, pre, code, tt, .mono {
 }
 
 body {
-	background: #e2e2e2;
+    background: #e2e2e2;
 }
+
 #page {
-	background: #fff;
+    background: #fff;
 }
 
 /* Headings */
-.entry-content  h1 { /* dave aug 18 2011 */ 
-  font-size: 150%;
-  margin-bottom: 20px;
-  padding: 3px 3px 3px 0px;
-  font-weight: bold;
+.entry-content h1 { /* dave aug 18 2011 */
+    font-size: 150%;
+    margin-bottom: 20px;
+    padding: 3px 3px 3px 0px;
+    font-weight: bold;
 }
-.entry-content  h2 { /* dave aug 18 2011 */ 
-  font-size: 125%;
-  font-weight: bold;
+
+.entry-content h2 { /* dave aug 18 2011 */
+    font-size: 125%;
+    font-weight: bold;
 }
 
 code {
-	background: rgba(240, 240, 240, 0.5);
-	font-weight: 400;
+    background: rgba(240, 240, 240, 0.5);
+    font-weight: 400;
 }
 
 pre {
-	background: #f4f4f4;
-	line-height: 1.5;
-        font-size: inherit;
-	margin-bottom: 1.625em;
-	overflow: auto;
-	padding: 0.75em 1.625em;
+    background: #f4f4f4;
+    line-height: 1.5;
+    font-size: inherit;
+    margin-bottom: 1.625em;
+    overflow: auto;
+    padding: 0.75em 1.625em;
 }
+
 code, kbd {
     font-size: inherit;
 }
@@ -168,8 +197,9 @@ input[type=password],
 textarea {
     color: inherit;
 }
+
 input[type=text] {
-	padding: inherit;
+    padding: inherit;
 }
 
 
@@ -178,49 +208,52 @@ input[type=text] {
 
 #branding {
     border-top: none;
-/*	border-top: 2px solid #bbb; dave 8/18/2011 */
+    /*	border-top: 2px solid #bbb; dave 8/18/2011 */
     z-index: 2;
 }
+
 #site-title {
-	padding: 8px 0 0; /*// changed dave july 29 2011 to reduce space above title, again nov 9*/
+    padding: 8px 0 0; /*// changed dave july 29 2011 to reduce space above title, again nov 9*/
 }
 
 
 #site-description {
-	margin: 0 270px 0px 0; /*//changed dave july 29 2011 from 3.65em to 20px*/
+    margin: 0 270px 0px 0; /*//changed dave july 29 2011 from 3.65em to 20px*/
 }
 
 
 #access a {
-	line-height: 2.75em; /* dave aug 1 2011 */
-	padding: 0 1em; /* dave aug 1 2011 */
+    line-height: 2.75em; /* dave aug 1 2011 */
+    padding: 0 1em; /* dave aug 1 2011 */
 }
+
 #access ul ul {
-	top: 2.75em; /* dave aug 1 2011 */
+    top: 2.75em; /* dave aug 1 2011 */
 }
 
 /* =Content
 ----------------------------------------------- */
 
 .entry-title {
-	padding-bottom: 10px; /*// changed dave july 29 2011 from .3em;*/
-	padding-top: 10px; /*// changed dave july 29 2011 from 15px;*/
+    padding-bottom: 10px; /*// changed dave july 29 2011 from .3em;*/
+    padding-top: 10px; /*// changed dave july 29 2011 from 15px;*/
 }
+
 .entry-summary {
-	padding: 5px 0 0; /*// changed dave july 29 2011 from 690px*/
+    padding: 5px 0 0; /*// changed dave july 29 2011 from 690px*/
 }
 
 .entry-content h2,
 .comment-content h2,
 .entry-content h3,
 .comment-content h3 {
-	color: inherit;
-	font-weight: inherit;
-	margin: inherit;
-	font-size: inherit;
-        line-height: inherit;
-        letter-spacing: inherit;
-        text-transform: none;
+    color: inherit;
+    font-weight: inherit;
+    margin: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-transform: none;
 }
 
 .entry-content h2,
@@ -238,87 +271,115 @@ input[type=text] {
 
 .entry-content table,
 .comment-content table {
-	border: 1px solid #ddd;
-	margin: 0px;
-	width: 100%; 
-}
-.entry-content th,
-.comment-content th {
-	font-weight: bold;
-	color: inherit;
-	font-size: inherit;
-	letter-spacing: inherit;
-	line-height: inherit;
-	text-transform: inherit;
-}
-.entry-content td,
-.comment-content td {
-	border-top: inherit; /*dave jan 20 2012 */
-	padding: 5px;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 100%;
 }
 
+.entry-content th,
+.comment-content th {
+    font-weight: bold;
+    color: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    text-transform: inherit;
+}
+
+.entry-content td,
+.comment-content td {
+    border-top: inherit; /*dave jan 20 2012 */
+    padding: 5px;
+}
 
 
 /* Singular content styles for Posts and Pages */
 .singular.page .hentry {
-	padding: 0 0 0; /* changed dave july 29 2011 from 3.5em */
+    padding: 0 0 0; /* changed dave july 29 2011 from 3.5em */
 }
+
 .singular .entry-title {
-	font-size: 30px; /* changed dave july 29 2011 from 36px */
+    font-size: 30px; /* changed dave july 29 2011 from 36px */
 }
 
 #site-generator {
-	padding: 2.2em 0em; /* dave aug 26 */
+    padding: 2.2em 0em; /* dave aug 26 */
 }
 
 
-.entry-content {padding: 5px 0 0;}
+.entry-content {
+    padding: 5px 0 0;
+}
 
-#wpadminbar .menupop .menupop > .ab-item, 
+#wpadminbar .menupop .menupop > .ab-item,
 #wpadminbar .ab-top-secondary .menupop .menupop > .ab-item,
 #wpadminbar #adminbarsearch .adminbar-input,
 #wp-admin-bar-wp-logo > .ab-item .ab-icon,
 #wp-admin-bar-updates > .ab-item .ab-icon,
 #wp-admin-bar-comments > .ab-item .ab-icon,
-#wpadminbar #wp-admin-bar-new-content > .ab-item .ab-icon
-{
-/*        background-image: url(images/admin-bar-sprite-green.png) !important; */
+#wpadminbar #wp-admin-bar-new-content > .ab-item .ab-icon {
+    /*        background-image: url(images/admin-bar-sprite-green.png) !important; */
 }
-/* use dark green, not grey; and adjust to right spot */
-#wpadminbar #adminbarsearch:before
-{color: inherit !important; position:relative !important; top:0.25em !important; left:1em !important}
 
-#wpadminbar .ab-icon:before, #wpadminbar .ab-item:before
-{color: inherit !important; position:relative !important; top:0.5em !important}
+/* use dark green, not grey; and adjust to right spot */
+#wpadminbar #adminbarsearch:before {
+    color: inherit !important;
+    position: relative !important;
+    top: 0.25em !important;
+    left: 1em !important
+}
+
+#wpadminbar .ab-icon:before, #wpadminbar .ab-item:before {
+    color: inherit !important;
+    position: relative !important;
+    top: 0.5em !important
+}
 
 /* use dark green, not while */
-#wpadminbar a.ab-item, #wpadminbar>#wp-toolbar span.ab-label, #wpadminbar>#wp-toolbar span.noticon
-{color: darkgreen !important}
+#wpadminbar a.ab-item, #wpadminbar > #wp-toolbar span.ab-label, #wpadminbar > #wp-toolbar span.noticon {
+    color: #3860f4 !important
+}
 
-#wpadminbar #wp-admin-bar-site-name>.ab-item:before {content:'' !important;} /* hide home icon */
-#wp-admin-bar-my-account>.ab-item:before {content: '' !important;} /* hide account icon */
+#wp-admin-bar-site-name > a{
+    color:#FFFFFF;
+}
+
+#wpadminbar #wp-admin-bar-site-name > .ab-item:before {
+    content: '' !important;
+}
+
+/* hide home icon */
+#wp-admin-bar-my-account > .ab-item:before {
+    content: '' !important;
+}
+
+/* hide account icon */
 
 /* revert color changes brought by wp 3.8 */
-#wpadminbar .menupop .ab-sub-wrapper, #wpadminbar .shortlink-input {background-color: white !important} 
-#wpadminbar .menupop .ab-sub-wrapper ul li:hover {background-color: #EEF !important}
+#wpadminbar .menupop .ab-sub-wrapper, #wpadminbar .shortlink-input {
+    background-color: white !important
+}
+
+#wpadminbar .menupop .ab-sub-wrapper ul li:hover {
+    background-color: #EEF !important
+}
 
 
 /* want this not just on "404" pages */
 
 #main #searchform {
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        border-width: 1px 0;
-        margin: 0 -8.9%;
-        overflow: hidden;
-        padding: 1.625em 8.9%;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-width: 1px 0;
+    margin: 0 -8.9%;
+    overflow: hidden;
+    padding: 1.625em 8.9%;
 }
 
 
-.testing-warning
-{
-font-style: italic;
-color: blue; 
+.testing-warning {
+    font-style: italic;
+    color: blue;
 }
 
 #wp-admin-bar-updates .screen-reader-text {
@@ -326,83 +387,112 @@ color: blue;
 }
 
 .wp-core-ui .button {
- font-size: 16px;
- font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #wpadminbar .ab-top-menu > li:hover > .ab-item {
-background: none !important;
-color: darkGreen !important;
-background-image: inherit !important;
+    background: none !important;
+    color: darkGreen !important;
+    background-image: inherit !important;
 }
+
 #wpadminbar .ab-top-menu > li.hover > .ab-item,
 #wpadminbar .ab-top-menu > li > .ab-item:focus,
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus {
-color: green !important;
-background: white !important;
-background-image: inherit !important;
+    color: green !important;
+    background: white !important;
+    background-image: inherit !important;
 }
 
 #wpadminbar a.ab-item:hover,
-#wpadminbar #wp-admin-bar-site-name a.ab-item:hover
-{
-background: none !important;
+#wpadminbar #wp-admin-bar-site-name a.ab-item:hover {
+    background: none !important;
 }
 
 .screen-reader-shortcut {
-  display: none;
+    display: none;
 }
 
 #content ul, #content ol {
     margin-bottom: 0.3em; /* not 1.625 */
 }
+
 #content th, #content #td {
     text-align: inherit;
 }
-a:not(.open-same-window):hover  {
+
+a:not(.open-same-window):hover {
     color: darkblue;
     background: #e0e0ff;
     text-decoration: none;
 }
 
-#content p { margin-top: 8px; margin-bottom: 8px; }
-#content pre { margin: 1px 1px 1px 1px; padding: 10px 10px 10px 20px; }
-#content ul { margin-bottom: 0px; }
-#content hr { margin-top: 8px; margin-bottom: 8px; }
+#content p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#content pre {
+    margin: 1px 1px 1px 1px;
+    padding: 10px 10px 10px 20px;
+}
+
+#content ul {
+    margin-bottom: 0px;
+}
+
+#content hr {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
 
 #content .entry-content h1, #content .entry-content h2 {
     margin: 20px 0px 0px 0px;
 }
+
 #content .entry-content h3, #content .entry-content h4, #content .entry-content h5, #content .entry-content h6 {
     margin: 12px 0px 0px 0px;
 }
 
-#wpadminbar .ab-top-secondary {	background: none !important;}
-
-#wpadminbar * { text-shadow: none !important;}
-
-#wpadminbar .ab-top-menu > .menupop > .ab-sub-wrapper {min-width: inherit !important;}
-
-#wpadminbar.ie8 #adminbarsearch .adminbar-input{background-color: lightGreen !important;}
-
-#wpadminbar #wp-admin-bar-totop img.icon {cursor: pointer}
-
-#wpadminbar img.icon {
-	background: none;
-	vertical-align: -2px;
-}
-#wpadminbar #wp-admin-bar-mail img.icon {
-	vertical-align: -4px;
+#wpadminbar .ab-top-secondary {
+    background: none !important;
 }
 
 #wpadminbar * {
-	border-left: none !important;
-	border-right: none !important;
+    text-shadow: none !important;
+}
+
+#wpadminbar .ab-top-menu > .menupop > .ab-sub-wrapper {
+    min-width: inherit !important;
+}
+
+#wpadminbar.ie8 #adminbarsearch .adminbar-input {
+    background-color: lightGreen !important;
+}
+
+#wpadminbar #wp-admin-bar-totop img.icon {
+    cursor: pointer
+}
+
+#wpadminbar img.icon {
+    background: none;
+    vertical-align: -2px;
+}
+
+#wpadminbar #wp-admin-bar-mail img.icon {
+    vertical-align: -4px;
+}
+
+#wpadminbar * {
+    border-left: none !important;
+    border-right: none !important;
 }
 
 .menu-item-for-lesson-zero { /* lesson 0 : set this in the menu editor, turn on css in screen options*/
     clear: left;
 }
+
 .menu-item-for-my-progress { /* My Progress; same as previous comment */
     float: right !important;
     font-weight: bold;
@@ -410,14 +500,18 @@ a:not(.open-same-window):hover  {
 
 /* kill default grey colours  */
 #wpadminbar, #wpadminbar * {
-    color: darkGreen; 
-} 
+    color: #FFFFFF;
+}
+
+#wpadminbar #wp-toolbar #wp-admin-bar-root-default  #wp-admin-bar-site-name{
+    background-color: #FFFFFF;
+}
 
 #wpadminbar {
-    background-image: url(images/banner.png) !important;
-    background-color: paleGreen !important;;
+    /*background-image: url(images/banner.png) !important;*/
+    background-color: #3860f4 !important;;
     border-bottom: 1px solid black !important;;
-    box-shadow: 0px 3px 15px -3px #777 !important;; 
+    box-shadow: 0px 3px 15px -3px #777 !important;;
 }
 
 #wpadminbar li.new-or-login * {
@@ -428,7 +522,9 @@ a:not(.open-same-window):hover  {
     text-align: center;
 }
 
-.content #wp-admin-bar-site-name .ab-item { text-shadow: 2px 2px 0px paleGreen, -2px -2px 0px paleGreen; }
+.content #wp-admin-bar-site-name .ab-item {
+    text-shadow: 2px 2px 0px #3860f4, -2px -2px 0px #3860f4;
+}
 
 #wp-admin-bar-my-account div.ab-sub-wrapper {
     padding-top: 10px !important;
@@ -443,71 +539,103 @@ div.ab-sub-wrapper {
 /* .profile-php is the reverse */
 
 /* necessary for top bar to grow and stretch with rest of page */
-@media all and (min-width:1000px) { .content #wpadminbar {
-    max-width: 1000px;
-    margin-left: -500px;
-    left: 50% !important;
-}}
+@media all and (min-width: 1000px) {
+    .content #wpadminbar {
+        max-width: 1000px;
+        margin-left: -500px;
+        left: 50% !important;
+    }
+}
 
 /* collection of lines modified from admin-bar.css so height is 52px instead of original (26?) */
 
 /* "Computer Science Circles" */
-.content #wp-admin-bar-site-name .ab-item
-{font: bold 30px/52px sans-serif; margin-left: 10px;}
+.content #wp-admin-bar-site-name .ab-item {
+    font: bold 30px/52px sans-serif;
+    margin-left: 10px;
+}
 
 /* throughout */
-.content #wpadminbar *
-{line-height: 52px; color:darkgreen;}
+.content #wpadminbar * {
+    line-height: 52px;
+    color: #FFFFFF;
+}
 
 /* the bar itself */
-.content #wpadminbar {line-height: 52px; height:52px;}
+.content #wpadminbar {
+    line-height: 52px;
+    height: 52px;
+}
 
 .content #wpadminbar .quicklinks a,
-#wpadminbar .shortlink-input{height:52px;padding:0 12px;margin:0;}
-#wpadminbar .quicklinks .ab-empty-item {height:52px !important;padding:0 12px;margin:0;}
+#wpadminbar .shortlink-input {
+    height: 52px;
+    padding: 0 12px;
+    margin: 0;
+}
 
-.content #wpadminbar.ie7 .menupop .ab-sub-wrapper,#wpadminbar.ie7 .shortlink-input{top:52px;left:0px;}
+#wpadminbar .quicklinks .ab-empty-item {
+    height: 52px !important;
+    padding: 0 12px;
+    margin: 0;
+}
 
-.content #wpadminbar #adminbarsearch{height:52px;padding:0px 2px;}
+.content #wpadminbar.ie7 .menupop .ab-sub-wrapper, #wpadminbar.ie7 .shortlink-input {
+    top: 52px;
+    left: 0px;
+}
 
-.content #wpadminbar #wp-admin-bar-user-info{margin-top:-6px;margin-bottom:25px;height:auto;background:none;}
+.content #wpadminbar #adminbarsearch {
+    height: 52px;
+    padding: 0px 2px;
+}
+
+.content #wpadminbar #wp-admin-bar-user-info {
+    margin-top: -6px;
+    margin-bottom: 25px;
+    height: auto;
+    background: none;
+}
+
 /* end of lines to adjust admin bar height */
 
 /*************** bumper: thing at the top to ensure cscircles banner covers nothing ***********8*/
 div#bumper {
-    background-color: paleGreen;
+    background-color: #3860f4;
     background-image: url(images/banner.png) !important;
     height: 52px;
-    width: 100%; 
+    width: 100%;
     color: #9F9;
     text-align: right;
 }
 
-div#bumper span {opacity: 0.1}
+div#bumper span {
+    opacity: 0.1
+}
 
 /******************* the picture of the fractal or computer ************/
 .toppictureholder {
     height: 150px;
     background-color: darkblue;
-/*    position: absolute;*/
+    /*    position: absolute;*/
     top: 0px;
     left: 0px;
 }
 
 header {
-   margin: 0px;
-   border: none !important;
-   position: relative;
-   top : 0px;
+    margin: 0px;
+    border: none !important;
+    position: relative;
+    top: 0px;
 }
 
 header > a {
-   position: relative;
-   top: 0px;
+    position: relative;
+    top: 0px;
 }
 
 header > a > div.toppictureholder {
-   position: relative;
+    position: relative;
 }
 
 /*********************************** bottom, CEMC logo ************************/
@@ -516,7 +644,7 @@ header > a > div.toppictureholder {
 }
 
 #colophon .cemc.logo {
-    float: left; 
+    float: left;
     margin-left: 25px;
     background-image: url(images/cemc_logo.gif);
     width: 73px;

@@ -80,7 +80,7 @@ function pbmailpage($options, $content) {
     $r .= '<div class="history-note">'.
       sprintf(__t('Mail about %1$s [%3$s] for %2$s'),
               $problem['publicname'],
-	      userString($sid),
+              userNickOrUserLogin($sid),
               '<a href="' . $problem['url'] . '">' . 
               __t('link to original page') . '</a>'
               );
@@ -151,7 +151,7 @@ function pbmailpage($options, $content) {
     $r .= '<hr style="width:80%;align:center;">';
     
     if (getUserID() != $sid) 
-      $r .= "<div class='history-note'><a href='".cscurl('progress').'?user='.$sid."'>".sprintf(__t("%s's progress page (new window)"), $name)."</a></div>";
+      $r .= "<div class='history-note'><a href='" . csCurlRouter('progress') . '?user=' . $sid . "'>" . sprintf(__t("%s's progress page (new window)"), $name) . "</a></div>";
 
 $r .= "
 <div class='collapseContain hiding'>
@@ -218,12 +218,12 @@ function reselector(&$students, $cstudents) {
     if (!userIsAdmin()) {
       foreach ($students as $student) {
         $info = get_userdata($student);
-        $options[$info->ID] = userString($info->ID);
+        $options[$info->ID] = userNickOrUserLogin($info->ID);
       }
     }
     
     if (userIsAdmin()) {
-      $preamble .= 'blank: you; "all": all; id#: user (<a href="'.cscurl('allusers').'">list</a>) <input style = "padding:0px;width:60px" type="text" name="user" value="'.getSoft($_REQUEST, 'user', '').'">';
+      $preamble .= 'blank: you; "all": all; id#: user (<a href="' . csCurlRouter('allusers') . '">list</a>) <input style = "padding:0px;width:60px" type="text" name="user" value="' . getSoft($_REQUEST, 'user', '') . '">';
     }
     else {
       $preamble .= optionsHelper($options, 'who');

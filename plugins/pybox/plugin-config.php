@@ -1,9 +1,11 @@
 <?php
 
-  // this file contains things you might need to personalize
-
-define('PRODUCTION_LANGUAGES', serialize(array('en', 'fr', 'de', 'nl', 'lt', 'zh')));
-define('DEVELOPMENT_LANGUAGES', serialize(array('pl', 'tr')));
+// this file contains things you might need to personalize
+// LW 2021年07月20日19:09:55
+// define('PRODUCTION_LANGUAGES', serialize(array('en', 'fr', 'de', 'nl', 'lt', 'zh')));
+define('PRODUCTION_LANGUAGES', serialize(array('zh')));
+// define('DEVELOPMENT_LANGUAGES', serialize(array('pl', 'tr')));
+define('DEVELOPMENT_LANGUAGES', serialize(array()));
 
 // user id of cscircles assistant for each language, defaults to dave/troy/sandy (0)
 // 2 should change
@@ -21,6 +23,8 @@ define('CSCIRCLES_ASST_ID_MAP',
 define ('ON_CEMC_SERVER', UWPHOME == 'https://cscircles.cemc.uwaterloo.ca/'
         || UWPHOME == 'https://cemclinux11.math.uwaterloo.ca/'
         || UWPHOME == 'https://cscircles.cemc.uwaterloo.ca/dev/');
+
+
 if (ON_CEMC_SERVER) {
   // if you want some of these, remove them from the 'if' block
   define('PYBOXLOG_EMAIL', 'daveagp@gmail.com');        // e-mail notifications for logging

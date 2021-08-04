@@ -15,8 +15,8 @@ function authorship($o, $c){
 add_shortcode('newuserwelcome', 'newuserwelcome');
 function newuserwelcome($options, $content) {
   if ( ! is_user_logged_in() ) {
-    $ulog = wp_login_url( cscurl('homepage') );
-    $uuse = cscurl('usage');
+    $ulog = wp_login_url(csCurlRouter('homepage') );
+    $uuse = csCurlRouter('usage');
 
     return "<em>".sprintf(__t('New around here? Read <a %1$s>Using this Website</a>. You can also <a %2$s>click here to create an account or log in</a>.'), 
 			  "class='open-same-window' href='$uuse'", 

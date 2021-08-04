@@ -43,51 +43,55 @@ function tabs_to_spaces($width, $text) {
   return $result;
 }
 
-// given a term describing a link to a special page,
-// get the URL to the (properly translated) real location
-function cscurl($desc) {
-  if ($desc == 'visualize') return UVISUALIZER;
+/**
+ * given a term describing a link to a special page,get the URL to the (properly translated) real location
+ * @param $desc
+ *
+ * @return array|false|mixed|string|string[]|void|WP_Error
+ */
+function csCurlRouter($desc) {
 
-  //  if ($desc == 'homepage') // due to a bug, we can't translate during 'is_admin'
-  //return is_admin() ? "/" : pll_home_url();
-  
-  $cscslugmap = array(
-		     ('progress') => 'user-page',
-		     ('mail') => 'mail',
-		     ('resources') => 'resources',
-		     ('console') => 'console',
-		     ('usage') => 'using-this-website',
-		     ('contact') => 'contact',
-		     ('install') => 'run-at-home',
-		     ('allusers') => 'admin-user-list',
-		     ('homepage') => NULL // see below
-		     );
+    if ($desc == 'visualize')
+        return UVISUALIZER;
 
-  $s = $cscslugmap[$desc];
-  global $wpdb;
+    $cscSlugMap = array(
+        ('progress')  => 'user-page',
+        ('mail')      => 'mail',
+        ('resources') => 'resources',
+        ('console')   => 'console',
+        ('usage')     => 'using-this-website',
+        ('contact')   => 'contact',
+        ('install')   => 'run-at-home',
+        ('allusers')  => 'admin-user-list',
+        ('homepage')  => NULL // see below
+    );
 
-  // compute $res, the native-language page id
-  if ($desc == 'homepage') {
-    
-    // normally for cscircles, show_on_front is page
-    // (front page displays static page in Settings/Reading)
-    if (get_option('show_on_front') != 'page')
-      return str_replace('/dev/', '/', get_option('siteurl'));
+    $tempResultInMap = $cscSlugMap[$desc];
 
-    $res = get_option('page_on_front');
-  }
-  else {
-    $res = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name like %s", $s));
-  }
+    global $wpdb;
 
-  if (class_exists('PLL_Base')) {
-    $lang = pll_current_language();
-    if ($lang=='' || $lang=='0') $lang=substr(get_bloginfo("language"), 0, 2);
-    if (getSoft($_POST, 'lang', '')) $lang=substr($_POST['lang'], 0, 2);
-    $res = pll_get_post($res, $lang);
-  }
+    // compute $res, the native-language page id
+    if ($desc == 'homepage') {
+        // normally for cscircles, show_on_front is page
+        // (front page displays static page in Settings/Reading)
+        if (get_option('show_on_front') != 'page')
+            return str_replace('/dev/', '/', get_option('siteurl'));
 
-  return get_permalink($res);
+        $res = get_option('page_on_front');
+    } else {
+        $res = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name like %s", $tempResultInMap));
+    }
+
+    if (class_exists('PLL_Base')) {
+        $lang = pll_current_language();
+        if ($lang == '' || $lang == '0')
+            $lang = substr(get_bloginfo("language"), 0, 2);
+        if (getSoft($_POST, 'lang', ''))
+            $lang = substr($_POST['lang'], 0, 2);
+        $res = pll_get_post($res, $lang);
+    }
+
+    return get_permalink($res);
 }
 
 function pb_mail($from, $to, $subject, $body) {
@@ -121,40 +125,58 @@ function pb_mail($from, $to, $subject, $body) {
   }
 }
 
-function userString($n, $short = false) {
-  if ($n < 0) return "unregistered";
-  $user = get_userdata($n);
-  if ($user === FALSE) return FALSE;
+/**
+ * Get User Nick Name or User Login Name
+ * @param       $user_id
+ * @param false $short
+ *
+ * @return false|mixed|string
+ */
+function userNickOrUserLogin($user_id, $short = false) {
+    if ($user_id < 0)
+        return "unregistered";
+    $user = get_userdata($user_id);
+    if ($user === FALSE)
+        return FALSE;
 
-  $nicks = json_decode(get_user_meta(wp_get_current_user()->ID, 'pb_studentnicks', true), true);
-  if (is_array($nicks) && array_key_exists($n, $nicks)) {
-    return $nicks[$n];
-  }
+    $nicks = json_decode(get_user_meta(wp_get_current_user()->ID, 'pb_studentnicks', true), true);
+    if (is_array($nicks) && array_key_exists($user_id, $nicks)) {
+        return $nicks[$user_id];
+    }
 
-  if (!$short)
-    return $user->user_login . " (" 
-      . $user->user_email . " #" . $n . ")";
-  return $user->user_login . " #" . $n ;
+    if (!$short)
+        return $user->user_login . " ("
+               . $user->user_email . " #" . $user_id . ")";
+    return $user->user_login . " #" . $user_id;
 }
 
+/**
+ * User is admin?
+ * @return bool
+ */
 function userIsAdmin() {
-  return is_user_logged_in() && current_user_can('level_10');
+    return is_user_logged_in() && current_user_can('level_10');
 }
 
+/**
+ * User is Assistant?
+ * @return bool
+ */
 function userIsAssistant() {
-  foreach (unserialize(CSCIRCLES_ASST_ID_MAP) as $lang => $id)
-    if (getUserID() == $id) return true;
-  return userIsAdmin();
+    foreach (unserialize(CSCIRCLES_ASST_ID_MAP) as $lang => $id)
+        if (getUserID() == $id)
+            return true;
+    return userIsAdmin();
 }
 
 function userIsTranslator() {
-  // TODO: fix this to work without role scoped, which is deprecated
-  return false;
-  if (!class_exists('PLL_Base')) return false;
-  if (!is_user_logged_in()) return false;
-  if (!ON_CEMC_SERVER) return false;
-  global $wpdb;
-  return 1==$wpdb->get_var("select count(1) from ".$wpdb->prefix."user2group_rs where group_id=10 and user_id=" . wp_get_current_user()->ID);
+    // TODO: fix this to work without role scoped, which is deprecated
+    return false;
+    if (!class_exists('PLL_Base')) return false;
+    if (!is_user_logged_in()) return false;
+    if (!ON_CEMC_SERVER) return false;
+    global $wpdb;
+    return 1 == $wpdb->get_var("select count(1) from " . $wpdb->prefix . "user2group_rs where group_id=10 and user_id=" . wp_get_current_user()->ID);
 }
 
 function nicefiedUsername($uid, $short = TRUE) {
@@ -163,7 +185,7 @@ function nicefiedUsername($uid, $short = TRUE) {
   elseif ($uid == 0 || in_array($uid, unserialize(CSCIRCLES_ASST_ID_MAP)))
     return $short ? __t('Asst.') : __t('CS Circles Assistant');
   else
-    return userString($uid);
+    return userNickOrUserLogin($uid);
 }
 
 function guruIDID($id) {
@@ -198,29 +220,29 @@ function currLang4() {
 // write to log, and send an e-mail
 // if second arg is on, suppress e-mail when possible
 function pyboxlog($message, $suppressemail = -1) {
-  $userid = getUserID();
+    $userid = getUserID();
 
-  if (($suppressemail === -1 || !defined('PPYBOXLOG'))
-      && defined('PYBOXLOG_EMAIL')) {
-    $to = PYBOXLOG_EMAIL;
-    $subject = 'pyboxlog';
-    $emailm  = $message . "\n" . "\n" 
-      . "\n" . "REQUEST: " . print_r($_REQUEST, TRUE) . "\n" 
-      . "\n" . "SERVER: " . print_r($_SERVER, TRUE) . "\n" 
-      . "\n" . "USERID: " . $userid . "\n"
-      . "\n" . "GET: " . print_r($_GET, TRUE) . "\n" 
-      . "\n" . "POST: " . print_r($_POST, TRUE) . "\n" 
-      //. "\n" . "SESSION: " . print_r($_SESSION, TRUE) . "\n" 
-      //. "\n" . "ENV: " . print_r($_ENV, TRUE) . "\n" 
-      ;
-    mail($to, $subject, $emailm);
-  }
-  if (defined('PPYBOXLOG')) {
-    $file = fopen(PPYBOXLOG, "a");
-    date_default_timezone_set('America/New_York');
-    fwrite($file, date("y-m-d H:i:s", time()) . " " . $message . "\n");
-    fclose($file);
-  }
+    if (($suppressemail === -1 || !defined('PPYBOXLOG'))
+        && defined('PYBOXLOG_EMAIL')) {
+        $to      = PYBOXLOG_EMAIL;
+        $subject = 'pyboxlog';
+        $emailm  = $message . "\n" . "\n"
+                   . "\n" . "REQUEST: " . print_r($_REQUEST, TRUE) . "\n"
+                   . "\n" . "SERVER: " . print_r($_SERVER, TRUE) . "\n"
+                   . "\n" . "USERID: " . $userid . "\n"
+                   . "\n" . "GET: " . print_r($_GET, TRUE) . "\n"
+                   . "\n" . "POST: " . print_r($_POST, TRUE) . "\n"
+            //. "\n" . "SESSION: " . print_r($_SESSION, TRUE) . "\n"
+            //. "\n" . "ENV: " . print_r($_ENV, TRUE) . "\n"
+        ;
+        mail($to, $subject, $emailm);
+    }
+    if (defined('PPYBOXLOG')) {
+        $file = fopen(PPYBOXLOG, "a");
+        date_default_timezone_set('America/New_York');
+        fwrite($file, date("y-m-d H:i:s", time()) . " " . $message . "\n");
+        fclose($file);
+    }
 }
 
 function softSafeDereference( $orig ) {
@@ -268,13 +290,18 @@ function ensureNewlineTerminated( $s ) {
   return $s;
 }
 
-
+/**
+ * Concat Row String
+ * @param $arr
+ *
+ * @return string
+ */
 function rowSummary($arr) {
-  foreach ($arr as $i => $v) {
-    if (!isset($r)) $r = '['; else $r .= ', ';
-    $r .= htmlspecialchars($i.':'.substr(json_encode($v), 0, 20));
-  }
-  return $r.']';
+    foreach ($arr as $i => $v) {
+        if (!isset($r)) $r = '['; else $r .= ', ';
+        $r .= htmlspecialchars($i . ':' . substr(json_encode($v), 0, 20));
+    }
+    return $r . ']';
 }
 
 function preBox( $s, $len = -1, $lenlimit = 2000, $style = '', $hinted = false ) {
@@ -399,26 +426,34 @@ function getCompleted($problem) {
   return ($count > 0)?TRUE:FALSE;
 }
 
+/**
+ * Get the students of the current User
+ * @param false $with_hidden
+ *
+ * @return array
+ */
 function getStudents($with_hidden = false) {
-  global $current_user;
-  wp_get_current_user();
+    global $current_user;
+    wp_get_current_user();
 
-  if ( ! is_user_logged_in() )
-    return array();
+    if (!is_user_logged_in())
+        return array();
 
-  global $wpdb;
+    global $wpdb;
 
-  $ulogin = $current_user->user_login;
+    $ulogin = $current_user->user_login;
 
-  $rows = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix."usermeta WHERE meta_key=%s AND meta_value=%s ORDER BY user_id DESC", 'pbguru', $ulogin));
+    $rows = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM " . $wpdb->prefix . "usermeta WHERE meta_key=%s AND meta_value=%s ORDER BY user_id DESC", 'pbguru', $ulogin));
 
-  $result = array();
-  if ($with_hidden)
-    $hidden = array();
-  else
-    $hidden = explode(",", get_user_meta(wp_get_current_user()->ID, 'pb_hidestudents', true));
-  foreach ($rows as $row) if (!in_array($row->user_id, $hidden)) $result[] = $row->user_id;
-  return $result;
+    $result = array();
+    if ($with_hidden)
+        $hidden = array();
+    else
+        $hidden = explode(",", get_user_meta(wp_get_current_user()->ID, 'pb_hidestudents', true));
+    foreach ($rows as $row)
+        if (!in_array($row->user_id, $hidden))
+            $result[] = $row->user_id;
+    return $result;
 }
 
 function getStudentList($with_hidden = false) {
@@ -448,30 +483,60 @@ function returnfromprofile() {
   return "<div><a class='button button-primary' href='$u'>".__t("Return to Computer Science Circles")."</a></div>";
 }
 
+/**
+ * If key in array return array[key],else return default
+ * @param $array
+ * @param $key
+ * @param $default
+ *
+ * @return mixed
+ */
 function getSoft($array, $key, $default) {
-  if (array_key_exists($key, $array))
-    return $array[$key];
-  return $default;
+    if (array_key_exists($key, $array))
+        return $array[$key];
+    return $default;
 }
+
+/**
+ * If key not in array ,set the key Item with Value
+ * @param $array
+ * @param $key
+ * @param $value
+ */
 function setSoft(&$array, $key, $value) {
-  if (!array_key_exists($key, $array))
-    $array[$key] = $value;
+    if (!array_key_exists($key, $array))
+        $array[$key] = $value;
 }
+
+/**
+ * If key in array and array[key] == value return true,else return false
+ * @param $array
+ * @param $key
+ * @param $value
+ *
+ * @return bool
+ */
 function isSoft(&$array, $key, $value) {
-  return array_key_exists($key, $array) && ($array[$key] === $value);
+    return array_key_exists($key, $array) && ($array[$key] === $value);
 }
+
+/**
+ * Unset key in array
+ * @param $array
+ * @param $key
+ */
 function unsetSoft(&$array, $key) {
-  if (array_key_exists($key, $array))
-    unset($array[$key]);
+    if (array_key_exists($key, $array))
+        unset($array[$key]);
 }
 
 function booleanize($x) {
-  return !(($x === FALSE) || ($x === 'N'));
+    return !(($x === FALSE) || ($x === 'N'));
 }
 
 function timeAndMicro() {
-  $m = explode(" ", substr(microtime(), 2));
-  return array($m[1], $m[0]);
+    $m = explode(" ", substr(microtime(), 2));
+    return array($m[1], $m[0]);
 }
 
 function simpleProfilingEntry($data) {
@@ -541,24 +606,34 @@ function retroProfilingEntry($seconds, $data=array()) {
   $wpdb->insert( $wpdb->prefix."pb_profiling", $data );
 }
 
+/**
+ * $options is an associative array mapping value=>text for html <options> elements
+ * @param $options
+ * @param $argname
+ *
+ * @return string
+ */
 function optionsHelper($options, $argname) {
-  // $options is an associative array mapping value=>text for html <options> elements
-  $select = getSoft($_GET, $argname, NULL);
-  $r = "<select name='$argname'>";
-  foreach ($options as $key => $text) 
-    if ($key == $select)
-      $r .= "<option value='$key' selected='selected'>$text</option>";
-    else
-      $r .= "<option value='$key'>$text</option>";
-  $r .= '</select>';
-  return $r;
+
+    $select = getSoft($_GET, $argname, NULL);
+    $r      = "<select name='$argname'>";
+    foreach ($options as $key => $text)
+        if ($key == $select)
+            $r .= "<option value='$key' selected='selected'>$text</option>";
+        else
+            $r .= "<option value='$key'>$text</option>";
+    $r .= '</select>';
+    return $r;
 }
 
 function pythonEscape($string) {
   return "'''" . addslashes($string) . "'''";
 }
 
-
+/**
+ * Count of all solved problem
+ * @return string|null
+ */
 function allSolvedCount() {
   global $wpdb;
   return $wpdb->get_var("select count(1) from ".$wpdb->prefix."pb_completed;");
@@ -573,28 +648,31 @@ function embed_atfile_links($s) {
 }
 
 function problemSourceWidget($parms, $bump = false) {
-  if ( is_user_logged_in() ) {
-    $classes = "get-problem-source";
-    if ($bump) $classes .= " bumpit";
-    
-    return '<a class="'.$classes.'" target="_blank" title="'.__t('View definition')
-      .'" href="'.UPROBLEMSOURCE.'?'.http_build_query($parms).'">'
-      .'&lt;/&gt;</a>';
-  }
-  else return "";
+    // if ( is_user_logged_in() ) { // LW 2021年08月04日19:22:02 make this can only be seen by Admin
+    if (userIsAdmin()) {
+        $classes = "get-problem-source";
+        if ($bump)
+            $classes .= " bumpit";
+
+        return '<a class="' . $classes . '" target="_blank" title="' . __t('View definition')
+               . '" href="' . UPROBLEMSOURCE . '?' . http_build_query($parms) . '">'
+               . '&lt;/&gt;</a>';
+    } else {
+        return "";
+    }
 }
 
 function pageSourceWidget() {
-  global $post;
-  if ( is_user_logged_in() && isset($post) ) {
-    $classes = "get-page-source";
-    
-    return '<a class="'.$classes.'" target="_blank" title="'.__t('View page source')
-      .'" href="'.UPAGESOURCE.'?'.http_build_query(array("page"=>$post->ID)).'">'
-      ."<img src='".UFILES."/cc.png'></a>";
-      //      .'&lt;/&gt;</a>';
-  }
-  else return "";
+    global $post;
+    // if (is_user_logged_in() && isset($post)) {
+    // LW 2021年08月04日19:24:27 make this can only be seen by Admin
+    if(userIsAdmin() && isset($post)){
+        $classes = "get-page-source";
+
+        return '<a class="' . $classes . '" target="_blank" title="' . __t('View page source')
+               . '" href="' . UPAGESOURCE . '?' . http_build_query(array("page" => $post->ID)) . '">'
+               . "<img src='" . UFILES . "/cc.png'></a>";
+    } else return "";
 }
 
 function open_source_preamble() {

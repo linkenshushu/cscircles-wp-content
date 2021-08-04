@@ -998,11 +998,11 @@ msgstr "你可以在下面的框中输入程序的输入。"
 
 #: ../wp-plugin/shortcodes-exercises.php:655
 msgid "Open in console"
-msgstr "在控制台中打开"
+msgstr "控制台中打开"
 
 #: ../wp-plugin/shortcodes-exercises.php:658
 msgid "Visualize"
-msgstr "显示"
+msgstr "可视化"
 
 #: ../wp-plugin/shortcodes-exercises.php:672
 msgid "Reset code to default"

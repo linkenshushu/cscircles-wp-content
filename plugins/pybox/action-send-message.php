@@ -36,9 +36,9 @@ function send($problem_info, $from, $to, $student, $slug, $body, $noreply) {
   
   $contents = $body."\n===\n";
   $contents .= __t("To send a reply message, please visit")."\n";
-  $contents .= cscurl('mail') . "?who=$student&what=$slug&which=$mailref#m\n";
+  $contents .= csCurlRouter('mail') . "?who=$student&what=$slug&which=$mailref#m\n";
   $contents .= __t("Problem URL:")." " . $problem_info['url'] . "\n";
-  $contents .= "[".__t("Sent by CS Circles")." ".cscurl("homepage")."]";
+  $contents .= "[".__t("Sent by CS Circles")." " . csCurlRouter("homepage") . "]";
 
   if ($to == 0) {
     // same fallback as admin-options.php

@@ -1,6 +1,6 @@
 <?php
 
-  /*****
+/*****
 
 Sweetcodes are a modification of WordPress shortcodes. This file defines
 their framework, but the actual sweetcodes are defined in 
@@ -78,7 +78,7 @@ can only be done within limits unless you are willing to do some work
 on the editor. The @file including mechanism is the intended way to
 get around this.
 
- *****/
+*****/
 
 $sweetcode_tags = array();
 
@@ -86,41 +86,43 @@ $sweetcode_strip_nl_body = array();
 $sweetcode_strip_pre_arg = array();
 
 function add_sweetcode($tag, $func, $flags) {
-  global $sweetcode_tags;
-  global $sweetcode_strip_nl_body;
-  global $sweetcode_strip_pre_arg;
-  
-  if ( is_callable($func) ) {
-    $sweetcode_tags[$tag] = $func;
-    if (strstr($flags, "N") !== FALSE)
-      $sweetcode_strip_nl_body[] = $tag;
-    if (strstr($flags, "P") !== FALSE)
-      $sweetcode_strip_pre_arg[] = $tag;
-  }
+    global $sweetcode_tags;
+    global $sweetcode_strip_nl_body;
+    global $sweetcode_strip_pre_arg;
+
+    if (is_callable($func)) {
+        $sweetcode_tags[$tag] = $func;
+        if (strstr($flags, "N") !== FALSE)
+            $sweetcode_strip_nl_body[] = $tag;
+        if (strstr($flags, "P") !== FALSE)
+            $sweetcode_strip_pre_arg[] = $tag;
+    }
 }
 
 function do_sweetcode($content) {
-  global $sweetcode_tags;
-  
-  if (empty($sweetcode_tags) || !is_array($sweetcode_tags))
-    return $content;
-  
-  $pattern = get_sweetcode_regex();
-  return preg_replace_callback( "/$pattern/s", 'do_sweetcode_tag', $content );
+    global $sweetcode_tags;
+
+    if (empty($sweetcode_tags) || !is_array($sweetcode_tags))
+        return $content;
+
+    $pattern = get_sweetcode_regex();
+    return preg_replace_callback("/$pattern/s", 'do_sweetcode_tag', $content);
 }
 
 function get_sweetcode_regex($strip_nl_only = false) {
-  global $sweetcode_tags;
-  global $sweetcode_strip_nl_body;
-  global $sweetcode_strip_pre_arg;
-  if ($strip_nl_only)
-    $tagnames = $sweetcode_strip_nl_body;
-  else
-    $tagnames = array_keys($sweetcode_tags);
-  $tagregexp = join( '|', array_map('preg_quote', $tagnames) );
+    global $sweetcode_tags;
+    global $sweetcode_strip_nl_body;
+    global $sweetcode_strip_pre_arg;
 
-  return
-    '\\['                              // Opening bracket
+    if ($strip_nl_only)
+        $tagnames = $sweetcode_strip_nl_body;
+    else
+        $tagnames = array_keys($sweetcode_tags);
+
+    $tagregexp = join( '|', array_map('preg_quote', $tagnames) );
+
+    return
+    '\\['                                // Opening bracket
     . '(\\[?)'                           // 1: Optional second opening bracket for escaping sweetcodes: [[tag]]
     . "($tagregexp)"                     // 2: Sweetcode name
     . '(?![\\w-])'                       // Not followed by word character or hyphen
@@ -129,8 +131,8 @@ function get_sweetcode_regex($strip_nl_only = false) {
     // the next 4 lines replace 2 original lines
     .        '"(?:\\\\.|""|[^\\\\"])*"(?!")' // inside of double-quotes, \. or "" or non-escaped; can't end followed by "
     .       "|'(?:\\\\.|''|[^\\\\'])*'(?!')" // inside of single-quotes, \. or '' or non-escaped; can't end followed by '
-    .       '|\\/(?!\\])'                // A forward slash not followed by a closing bracket
-    .       '|[^\\]\\/\'"]'              // Not a closing bracket or forward slash or quotes
+    .       '|\\/(?!\\])'                    // A forward slash not followed by a closing bracket
+    .       '|[^\\]\\/\'"]'                  // Not a closing bracket or forward slash or quotes
     // end changes!
     .   ')*?'
     . ')'
@@ -153,117 +155,112 @@ function get_sweetcode_regex($strip_nl_only = false) {
     . '(\\]?)';                          // 6: Optional second closing brocket for escaping sweetcodes: [[tag]]
 }
 
-function do_sweetcode_tag( $m ) {
+function do_sweetcode_tag($m) {
 
-      //echo '((('.$m[0].')))';
-  
-  global $sweetcode_tags;
+    global $sweetcode_tags;
 
-  // allow [[foo]] syntax for escaping a tag
-  if ( $m[1] == '[' && $m[6] == ']' ) {
-    return substr($m[0], 1, -1);
-  }
+    // allow [[foo]] syntax for escaping a tag
+    if ($m[1] == '[' && $m[6] == ']') {
+        return substr($m[0], 1, -1);
+    }
 
-  $tag = $m[2];
+    $tag = $m[2];
 
-  $attr = sweetcode_parse_atts( $m[3] , $m[2]);
+    $attr = sweetcode_parse_atts($m[3], $m[2]);
 
-  if ( isset( $m[5] ) ) {
-    // enclosing tag - extra parameter
-    return $m[1] . call_user_func( $sweetcode_tags[$tag], $attr, $m[5], $tag ) . $m[6];
-  } else {
-    // self-closing tag
-    return $m[1] . call_user_func( $sweetcode_tags[$tag], $attr, null,  $tag ) . $m[6];
-  }
+    if (isset($m[5])) {
+        // enclosing tag - extra parameter
+        return $m[1] . call_user_func($sweetcode_tags[$tag], $attr, $m[5], $tag) . $m[6];
+    } else {
+        // self-closing tag
+        return $m[1] . call_user_func($sweetcode_tags[$tag], $attr, null, $tag) . $m[6];
+    }
 }
 
 function sweetcode_parse_atts($text, $tag) {
-  $atts = array();
+    $atts = array();
 
-  $pattern = 
-    '/(\w+)\s*=\s*"'.'((?:\\\\.|""|[^\\\\"])*)'.'"(?!")'  // old:  '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)'
-    ."|(\w+)\s*=\s*'"."((?:\\\\.|''|[^\\\\'])*)"."'(?!')" // old: .'|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)'
-    .'|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)'
-    .'|"([^"]*)"(?:\s|$)'
-    .'|([^ ="\'\s]+)(?:\s|$)/'; // modified
+    $pattern
+        = '/(\w+)\s*=\s*"' . '((?:\\\\.|""|[^\\\\"])*)' . '"(?!")'  // old:  '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)'
+          . "|(\w+)\s*=\s*'" . "((?:\\\\.|''|[^\\\\'])*)" . "'(?!')" // old: .'|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)'
+          . '|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)'
+          . '|"([^"]*)"(?:\s|$)'
+          . '|([^ ="\'\s]+)(?:\s|$)/'; // modified
 
-  global $sweetcode_strip_pre_arg;
-  if (in_array($tag,  $sweetcode_strip_pre_arg)) {
-    // we want to allow the user to use these
-    $text = str_replace("<pre>", "", $text);
-    $text = str_replace("</pre>", "", $text);
-  }
-
-  // deal with our methodology for keeping newlines in args only
-  $text = str_replace("<!--argOnlyNewline-->", "\n", $text);
-  $text = str_replace("<br/>", "\n", $text);
-  
-  // remove stuff autop might have added
-  $text = str_replace("<p>", "", $text);
-  $text = str_replace("</p>", "", $text);
-
-  // non-breaking spaces
-  $text = str_replace("&nbsp;", " ", $text);
-  $text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
-
-  if ( preg_match_all($pattern, $text, $match, PREG_SET_ORDER) ) {
-    foreach ($match as $m) {
-      /*echo '{{{'.$m[0].'}}}';
-      echo '{';
-      foreach ($m as $i=>$v) echo '[' . $i . '=>' . '(' . $v .')],';
-      echo '}';*/
-      if (!empty($m[1]))
-        $atts[strtolower($m[1])] = strip_and_unduplicate($m[2], '"');
-      elseif (!empty($m[3]))
-        $atts[strtolower($m[3])] = strip_and_unduplicate($m[4], "'");
-      elseif (!empty($m[5]))
-        $atts[strtolower($m[5])] = stripcslashes($m[6]);
-      elseif (isset($m[7]) and strlen($m[7]))
-        $atts[] = stripcslashes($m[7]);
-      elseif (isset($m[8]))
-        $atts[] = stripcslashes($m[8]);
+    global $sweetcode_strip_pre_arg;
+    if (in_array($tag, $sweetcode_strip_pre_arg)) {
+        // we want to allow the user to use these
+        $text = str_replace("<pre>", "", $text);
+        $text = str_replace("</pre>", "", $text);
     }
-  } 
-  return $atts;
+
+    // deal with our methodology for keeping newlines in args only
+    $text = str_replace("<!--argOnlyNewline-->", "\n", $text);
+    $text = str_replace("<br/>", "\n", $text);
+
+    // remove stuff autop might have added
+    $text = str_replace("<p>", "", $text);
+    $text = str_replace("</p>", "", $text);
+
+    // non-breaking spaces
+    $text = str_replace("&nbsp;", " ", $text);
+    $text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
+
+    if (preg_match_all($pattern, $text, $match, PREG_SET_ORDER)) {
+        foreach ($match as $m) {
+            if (!empty($m[1]))
+                $atts[strtolower($m[1])] = strip_and_unduplicate($m[2], '"');
+            elseif (!empty($m[3]))
+                $atts[strtolower($m[3])] = strip_and_unduplicate($m[4], "'");
+            elseif (!empty($m[5]))
+                $atts[strtolower($m[5])] = stripcslashes($m[6]);
+            elseif (isset($m[7]) and strlen($m[7]))
+                $atts[] = stripcslashes($m[7]);
+            elseif (isset($m[8]))
+                $atts[] = stripcslashes($m[8]);
+        }
+    }
+    return $atts;
 
 }
 
 function strip_and_unduplicate($text, $q) {
-  $r = '';
-  $n = strlen($text);
-  $a = str_split($text);
-  for ($i = 0; $i < $n; $i++) {
-    if ($a[$i]=='\\') {
-      $a[$i] = '';
-      $a[$i+1] = stripcslashes('\\' . $a[$i+1]);
-      $i++;
+    $r = '';
+    $n = strlen($text);
+    $a = str_split($text);
+    for ($i = 0; $i < $n; $i++) {
+        if ($a[$i] == '\\') {
+            $a[$i]     = '';
+            $a[$i + 1] = stripcslashes('\\' . $a[$i + 1]);
+            $i++;
+        } else if ($a[$i] == $q) { // must be a duplicated $q quote
+            $i++;
+            $a[$i] = '';
+        }
     }
-    else if ($a[$i]==$q) { // must be a duplicated $q quote
-      $i++;
-      $a[$i] = '';
-    }
-  }
-  return implode($a);
+    return implode($a);
 }
 
 add_filter('the_content', 'do_sweetcode', 11);
 
 function preprocesscallback1($m) {
-  return str_replace("\n", "<br/>", $m[0]);
+    return str_replace("\n", "<br/>", $m[0]);
 }
+
 function preprocesscallback($m) {
-  $res = $m[0];
-  $res = preg_replace_callback("|<pre>.*</pre>|sU", "preprocesscallback1", $res);
-  $res = str_replace("\r", "", $res);
-  $res = str_replace("\n", "<!--argOnlyNewline-->", $res);
-  return $res;
+    $res = $m[0];
+    $res = preg_replace_callback("|<pre>.*</pre>|sU", "preprocesscallback1", $res);
+    $res = str_replace("\r", "", $res);
+    $res = str_replace("\n", "<!--argOnlyNewline-->", $res);
+    return $res;
 }
+
 function preprocess($text) {
-  // delete all newlines within sweetcode bodies as they don't play well with wpautop
-  $f = get_sweetcode_regex(true);
-  $f = '@'.$f.'@s';
-  $text = preg_replace_callback($f, "preprocesscallback", $text);
-  return $text;
+    // delete all newlines within sweetcode bodies as they don't play well with wpautop
+    $f    = get_sweetcode_regex(true);
+    $f    = '@' . $f . '@s';
+    $text = preg_replace_callback($f, "preprocesscallback", $text);
+    return $text;
 }
 
 add_filter ('the_content',  'preprocess', 1);
@@ -271,5 +268,5 @@ add_filter ('the_content',  'preprocess', 1);
 add_filter ('the_content',  'removeAON', 20);
 
 function removeAON($content) {
-  return str_replace("<!--argOnlyNewline-->", " ", $content);
+    return str_replace("<!--argOnlyNewline-->", " ", $content);
 }

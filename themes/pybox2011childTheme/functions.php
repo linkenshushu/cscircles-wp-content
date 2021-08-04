@@ -8,7 +8,7 @@ function pybox_on() {
 }
 
 function _cscurl($slug) {
-  return pybox_on() ? cscurl($slug) : $slug;
+  return pybox_on() ? csCurlRouter($slug) : $slug;
 }
 
 function ___t($text) {

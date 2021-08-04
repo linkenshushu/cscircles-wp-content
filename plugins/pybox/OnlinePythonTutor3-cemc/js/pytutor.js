@@ -280,7 +280,7 @@ ExecutionVisualizer.prototype.render = function() {
        <div id="vcrControls">\
          <button id="jmpFirstInstr", type="button">&lt;&lt; First</button>\
          <button id="jmpStepBack", type="button">&lt; Back</button>\
-         <span id="curInstr">Step ? of ?</span>\
+         <span id="curInstr">第 ? 步, 共 ? 步</span>\
          <button id="jmpStepFwd", type="button">Forward &gt;</button>\
          <button id="jmpLastInstr", type="button">Last &gt;&gt;</button>\
        </div>\

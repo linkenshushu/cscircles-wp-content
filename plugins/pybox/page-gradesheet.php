@@ -41,7 +41,7 @@
     $num_found += 1;
     $user = get_userdata($id);
     $group = getSoft($groups, $id, '[no group]');
-    $desc = "{$user->user_firstname} {$user->user_lastname} " . userString($id);
+    $desc = "{$user->user_firstname} {$user->user_lastname} " . userNickOrUserLogin($id);
     echo "$id,".csvify($user->user_email).",".csvify($desc).",".csvify($group);
     foreach ($problems as $prow) {
       echo ',';

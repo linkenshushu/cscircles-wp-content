@@ -1,75 +1,81 @@
 <?php
 
-function user_pb_options_fields( $user ) { 
-  $checkd = "";
-  if (get_the_author_meta( 'pbplain', $user->ID )=='true') $checkd = ' checked="yes"  ';
-  /* $oh = "";
-  if (get_the_author_meta( 'pboldhistory', $user->ID )=='true') $oh = ' checked="yes"  ';*/
-  $nocc = "";
-  if (get_the_author_meta( 'pbnocc', $user->ID )=='true') $nocc = ' checked="yes"  ';
-  $optout = "";
-  if (get_the_author_meta( 'pboptout', $user->ID )=='true') $optout = ' checked="yes"  ';
-  $guru_login = get_the_author_meta( 'pbguru', $user->ID );
-  $gurucheck = '';
-  if (trim($guru_login) != '') {
-    global $wpdb;
-    $guruid = $wpdb->get_var($wpdb->prepare('SELECT ID from '.$wpdb->prefix.'users WHERE user_login = %s', $guru_login));
-    if ($guruid === NULL) 
-      $gurucheck = 
-	"<b>".sprintf(__t("The username %s does not exist."), "<code>" . htmlspecialchars($guru_login) . "</code>")."</b>";
-    else
-      $gurucheck = 
-	sprintf(__t("%s exists! They are your guru."), "<code>" . htmlspecialchars($guru_login) . "</code> ");
-  }
-  else 
-    $gurucheck = __t("Enter the username of your guru. After you press <i>Update profile</i> we'll see if they exist.");
-  
-  $guruinput = '<input type="text" name="pbguru" id="pbguru" value="'. htmlspecialchars($guru_login) . '"> ' . $gurucheck .'<br/>';
+function user_pb_options_fields( $user ) {
+    $checkd = "";
+    if (get_the_author_meta('pbplain', $user->ID) == 'true')
+        $checkd = ' checked="yes"  ';
+
+    $nocc = "";
+    if (get_the_author_meta('pbnocc', $user->ID) == 'true')
+        $nocc = ' checked="yes"  ';
+
+    $optout = "";
+    if (get_the_author_meta('pboptout', $user->ID) == 'true')
+        $optout = ' checked="yes"  ';
+
+    $guru_login = get_the_author_meta('pbguru', $user->ID);
+
+    $gurucheck = '';
+    if (trim($guru_login) != '') {
+        global $wpdb;
+        $guruid = $wpdb->get_var($wpdb->prepare('SELECT ID from ' . $wpdb->prefix . 'users WHERE user_login = %s', $guru_login));
+        if ($guruid === NULL)
+            $gurucheck
+                = "<b>" . sprintf(__t("The username %s does not exist."), "<code>" . htmlspecialchars($guru_login) . "</code>") . "</b>";
+        else
+            $gurucheck
+                = sprintf(__t("%s exists! They are your guru."), "<code>" . htmlspecialchars($guru_login) . "</code> ");
+    }else{
+        $gurucheck = __t("Enter the username of your guru. After you press <i>Update profile</i> we'll see if they exist.");
+    }
+
+    $guruinput = '<input type="text" name="pbguru" id="pbguru" value="'. htmlspecialchars($guru_login) . '"> ' . $gurucheck .'<br/>';
   
 ?>
-  <h3>Computer Science Circles Options</h3>
-     <table class="form-table">
-     <tr><th><label for="pbguru"><?php echo __t('Guru&apos;s <i>Username</i> (blank for none)'); ?></label></th>
+    <h3><?php echo __t("Computer Science Circles Options");?></h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="pbguru"><?php echo __t('Guru&apos;s <i>Username</i> (blank for none)'); ?></label></th>
 				<td>
 		     <?php echo $guruinput . __t("Any other person with a CS Circles account (such as your teacher) can be your guru. You can ask them direct questions when you get stuck, and they can view your progress.");
 ?>
-	 </input>
-       </td>
-       </tr>
-       <tr>
-	     <th><label for="pbplain"><?php echo __t("Disable Rich Editor");?></label></th>
-       <td>
-     <input type="checkbox" name="pbplain" id="pbplain"<?php echo $checkd ." > ".
-     __t("(default: unchecked) If checked, the rich editor (see Lesson 7) is always replaced by a plain editor."); ?></input>
-       </td>
-       </tr>
-       <tr>
-	     <th><label for="pbnocc"><?php echo __t("Don&apos;t Send Mail Copies");?></label></th>
-       <td>
-     <input type="checkbox" name="pbnocc" id="pbnocc"<?php echo $nocc ." > ".
-     __t("(default: unchecked) If checked, you will not receive a carbon copy when you send a message."); ?></input>
-       </td>
-       </tr>
+                    </input>
+                </td>
+        </tr>
+        <tr>
+            <th><label for="pbplain"><?php echo __t("Disable Rich Editor"); ?></label></th>
+            <td>
+                <input type="checkbox" name="pbplain" id="pbplain"<?php echo $checkd . " > " .
+                                                                             __t("(default: unchecked) If checked, the rich editor (see Lesson 7) is always replaced by a plain editor."); ?></input>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pbnocc"><?php echo __t("Don&apos;t Send Mail Copies"); ?></label></th>
+            <td>
+                <input type="checkbox" name="pbnocc" id="pbnocc"<?php echo $nocc . " > " .
+                                                                           __t("(default: unchecked) If checked, you will not receive a carbon copy when you send a message."); ?></input>
+            </td>
+        </tr>
 
-       <tr>
-														<th><label for="pboptout"><?php echo __t("Opt Out of Mass Emails"); ?></label></th>
-       <td>
-     <input type="checkbox" name="pboptout" id="pboptout"<?php echo $optout . " > ".
- __t("(default: unchecked) If checked, you will not receive announcements from CS Circles. They are pretty infrequent, about once per year.");?></input>
-       </td>
-       </tr>
+        <tr>
+            <th><label for="pboptout"><?php echo __t("Opt Out of Mass Emails"); ?></label></th>
+            <td>
+                <input type="checkbox" name="pboptout" id="pboptout"<?php echo $optout . " > " .
+                                                                               __t("(default: unchecked) If checked, you will not receive announcements from CS Circles. They are pretty infrequent, about once per year."); ?></input>
+            </td>
+        </tr>
 
-       <tr>
-														<th><label for="pbprogress"><?php echo __t("Hide/Restore Progress?"); ?></label></th>
-                                                                                                                                                                                            <td><?php echo __t("If you want to restart from scratch, select an option below before updating your profile.");?>
- <br><input type="radio" name="pbprogress" value="none" checked="true">
-   <?php echo __t("Do nothing");?></input>
- <br><input type="radio" name="pbprogress" value="hide">
-   <?php echo __t("Hide all my progress and past submissions.");?></input>
- <br><input type="radio" name="pbprogress" value="restore">
- <?php echo __t("Restore all progress and past submissions I have ever hidden.");?></input>
-       </td>
-       </tr>
+        <tr>
+            <th><label for="pbprogress"><?php echo __t("Hide/Restore Progress?"); ?></label></th>
+            <td><?php echo __t("If you want to restart from scratch, select an option below before updating your profile."); ?>
+                <br><input type="radio" name="pbprogress" value="none" checked="true">
+                    <?php echo __t("Do nothing"); ?></input>
+                <br><input type="radio" name="pbprogress" value="hide">
+                    <?php echo __t("Hide all my progress and past submissions."); ?></input>
+                <br><input type="radio" name="pbprogress" value="restore">
+                    <?php echo __t("Restore all progress and past submissions I have ever hidden."); ?></input>
+            </td>
+        </tr>
        </table>
     <?php }
 

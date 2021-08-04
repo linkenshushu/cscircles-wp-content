@@ -692,7 +692,7 @@ function merror($message, $errmsg, $suppress = -1) {
   pyboxlog("[main error] " . $errmsg 
 	   . " (partial message: " . $message . ")", $suppress);
   return "E"."<b>Internal error or HTTP error, details below. "
-    . "You can <a href=\"" . cscurl('contact') . "\">contact us</a>."
+    . "You can <a href=\"" . csCurlRouter('contact') . "\">contact us</a>."
     . "</b> Timestamp: " . date("y-m-d H:i:s", $beginstamp) . "<br/>" 
     . preBox($errmsg);
 } //helper
@@ -732,8 +732,8 @@ function run_submission($post) {
 	     . strlen(print_r($post, TRUE)));
     return mfail(sprintf(__t('Submitted data (program and/or test input) '
 			     .'too large. Reduce size or <a href = "%s">'
-			     .'run at home</a>.'), 
-			 cscurl('install')));
+			     .'run at home</a>.'),
+                         csCurlRouter('install')));
   }
   
   $id = getSoft($post, "pyId", "EMPTY");

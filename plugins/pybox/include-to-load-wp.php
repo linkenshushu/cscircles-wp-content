@@ -1,10 +1,10 @@
 <?php
 
 if (defined('ABSPATH')) {
-  echo "Error, WordPress is already loaded!";
-  debug_print_backtrace();
-  exit(0);
- }
+    echo "Error, WordPress is already loaded!";
+    debug_print_backtrace();
+    exit(0);
+}
 
 // used for external/ajax access to wordpress functions
 // http://codex.wordpress.org/Integrating_WordPress_with_Your_Website
@@ -15,23 +15,16 @@ if (defined('ABSPATH')) {
 require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/wp-load.php');
 // now wordpress is loaded. Huzzah!
 
-add_filter( 'locale', 'set_my_locale' );
-function set_my_locale( $lang ) {
-  if (array_key_exists('lang', $_REQUEST))
-    return $_REQUEST['lang'];
-  return $lang;
+add_filter('locale', 'set_my_locale');
+function set_my_locale($lang) {
+    if (array_key_exists('lang', $_REQUEST))
+        return $_REQUEST['lang'];
+    return $lang;
 }
 
 if (array_key_exists('lang', $_REQUEST)) {
-  load_textdomain( 'cscircles', 'cscircles-' . $_REQUEST['lang'] . '.mo' );
+    load_textdomain('cscircles', 'cscircles-' . $_REQUEST['lang'] . '.mo');
 }
-
-// we only need this for ajax calls:
-/*if (array_key_exists('polylang', $GLOBALS)
-    // but not for the visualizer:
-    && !defined("DO_NOT_LOAD_POLYLANG_TEXTDOMAINS"))
-  $GLOBALS['polylang']->load_textdomains();
-*/
 
 // this is to avoid errors shown if WP_DEBUG is on
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
