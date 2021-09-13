@@ -6,41 +6,57 @@ var registerClick = function(selector, callback) {
 };
 
 function __t(str) {
-    if (translationArray == null)
+
+    if (translationArray == null){
         return str;
+    }
+
     return translationArray[str];
 }
 
 function toggleVisibility(id) {
+
     $('#' + id).toggle();
+
 }
 
 function stylePybox(id, modeCharacter) {
+
     box = $("#pybox" + id);
     box.removeClass("modeNeutral modeCorrect modeInternalError");
-    if (modeCharacter == 'E')
+
+    if (modeCharacter == 'E'){
         box.addClass("modeInternalError");
-    else if (modeCharacter == 'Y')
+    }else if (modeCharacter == 'Y'){
         box.addClass("modeCorrect");
-    else // typically 'y' for correct in facultative, or 'N' for wrong
+    }else{// typically 'y' for correct in facultative, or 'N' for wrong
         box.addClass("modeNeutral");
+    }
+
 }
 
 function testingSI(fac, tni) {
-    if (fac)
+    if (fac){
         return __t("Hide input box");
+    }
+
     return __t("Go back to grading");
 }
 
 function gradingSI(fac, tni) { 
-    if (fac)
+    if (fac){
         return __t("Enter input");
-    if (tni == "Y")
+    }
+
+    if (tni == "Y"){
         return __t("Enter test statements");
+    }
+
     return __t("Enter test input");
 }
 
 function pbInputSwitch(id, tni) {
+
     var fac = $('#pybox'+id).hasClass('facultative');
     $('#pyinput'+id).toggle();
     if ($('#inputInUse'+id).val()=='N') {
@@ -52,30 +68,38 @@ function pbInputSwitch(id, tni) {
         setCommandLabel(id, 'switch', gradingSI(fac, tni));
         $('#inputInUse'+id).val('N');
     }
+
 }
 
 function pbSetText(id, txt) { //should not be called on scrambles.
+
     w = $('#pybox'+id+" .pyboxCodewrap");
-    if (w.hasClass('CM')) 
-	    cmed[id].setValue(txt);
-    else 
-	    $('#usercode'+id).val(txt);
+    if (w.hasClass('CM')) {
+        cmed[id].setValue(txt);
+    }else{
+        $('#usercode'+id).val(txt);
+    }
+
 }
 
 function pbGetText(id) {
-    if ($('#pybox'+id).hasClass('scramble')) 
+    if ($('#pybox'+id).hasClass('scramble')) {
         return $('#pyscramble'+id)
-                .sortable()
-                .children()
-                .map(function(){return $(this).text();})
-                .get()
-                .join('\n');
+            .sortable()
+            .children()
+            .map(function(){return $(this).text();})
+            .get()
+            .join('\n');
+    }
+
     w = $('#pybox'+id+" .pyboxCodewrap");
 
-    if (w.hasClass('CM')) 
-	    return cmed[id].getValue();
-    else 
-	    return $('#usercode'+id).val();
+    if (w.hasClass('CM')) {
+        return cmed[id].getValue();
+    }else{
+        return $('#usercode'+id).val();
+    }
+
 }	
 
 function getID(event) {
@@ -98,7 +122,9 @@ function pbFormSubmit(event) {
             timeoutMS = field.value;
         else
             values[field.name] = field.value;
-        });
+        }
+    );
+
     values['usercode'+id]=pbGetText(id);
 
     $('#submit'+id).attr('disabled', true);
@@ -106,6 +132,7 @@ function pbFormSubmit(event) {
     $('#pybox'+id+' .bumpit').removeClass('bumpit');
     
     $('#pbresults'+id).html("<p>"+__t("Running...")+'</p>');
+
     $.ajax({
         type: "POST",
         url: SUBMITURL,
@@ -114,7 +141,6 @@ function pbFormSubmit(event) {
         success: function(data) {
                 $('#pbresults'+id).html(data.substring(1));
                 stylePybox(id, data.charAt(0));
-                //$("#pybox"+id).css("background-color", returnColours[data.charAt(0)]);
                 if (data.charAt(0)=="Y")
                     happyFace(id);
                 $('#submit'+id).attr('disabled', false);
@@ -494,88 +520,95 @@ function pyflex(options) {
     //options['url']      : url that performs the database call
     //options['dbparams'] : extra arguments to send in database call
     //options['flparams'] : extra arguments for flexigrid, overwriting defaults
-  if (! ('dbparams' in options)) {
-    options['dbparams'] = {};
-  }
-  options['dbparams']['lang'] = window.PB_LANG4;
-    $.ajax
-    ({type:"POST",
-      url:options['url'],
-      data:$.param(options['dbparams']),
-      success:function(data){pyflexSuccess(options, data);},
-      failure:function(){$("#"+options['id']).html(__t('Error: could not connect to database.'));}
-     });
+    if (! ('dbparams' in options)) {
+        options['dbparams'] = {};
+    }
+    options['dbparams']['lang'] = window.PB_LANG4;
+    $.ajax(
+        {
+            type:"POST",
+            url:options['url'],
+            data:$.param(options['dbparams']),
+            success:function(data){
+                pyflexSuccess(options, data);
+                },
+            failure:function(){
+                $("#"+options['id']).html(__t('Error: could not connect to database.'));
+            }
+        });
 }
 function pyflexSuccess(options, data) {
     $('#'+options['id']+' .pyflexerror').remove();
-    //console.log('b');
     if (!(data instanceof Object) || !("rows" in data) || data["rows"].length==0) {
-	hflexhelp[options['id']] = options;
-	msg = (!(data instanceof Object) || !("rows" in data)) ? data : __t('The database connected but found no data.'); 
-	info = "<a onclick='pyflex(hflexhelp[\""+options['id']+"\"])'>"+__t("Click to try again.")+"</a>";
-	$('#'+options['id']).html('<span class="pyflexerror">' + msg + ' ' + info + '</span>');
-	//alert(msg);
-	return;
+        hflexhelp[options['id']] = options;
+        msg = (!(data instanceof Object) || !("rows" in data)) ? data : __t('The database connected but found no data.');
+        info = "<a onclick='pyflex(hflexhelp[\""+options['id']+"\"])'>"+__t("Click to try again.")+"</a>";
+        $('#'+options['id']).html('<span class="pyflexerror">' + msg + ' ' + info + '</span>');
+        return;
     }
-    //console.log('B');
     firstRow = data['rows'][0]['cell'];
     model = new Array();
     for (colname in firstRow) {
-	colModel = {display: colname, name: colname, sortable: true};
-	if (colname == 'user code' && $('#'+options['id']).parents('.pybox').length > 0) 
-	    colModel['attrs'] = {'class': 'usercodecol', 'title': 'double-click to reload version'};
-	model.push(colModel);
+        colModel = {display: colname, name: colname, sortable: true};
+        if (colname == 'user code' && $('#'+options['id']).parents('.pybox').length > 0){
+            colModel['attrs'] = {'class': 'usercodecol', 'title': 'double-click to reload version'};
+        }
+        model.push(colModel);
     }
-    //console.log('Z');
     xp = new Array();
-    if ('dbparams' in options)
-	for (paramname in options['dbparams']) 
-	    xp.push({name: paramname, value: options['dbparams'][paramname]});
+    if ('dbparams' in options){
+        for (paramname in options['dbparams']){
+            xp.push({name: paramname, value: options['dbparams'][paramname]});
+        }
+    }
     $('#' + options['id']).prepend('<span class="pyflex"></span>');
 
     $(function() {
-	opts = {
-	    url: options['url'], 
-	    dataType: 'json',
-	    colModel: model, 
-	    usepager: true,
-	    resizableVForce: true,
-	    useRp: true,
-	    unselectable: true,
-	    showToggleBtn: false,
-	    rp: 4, 
-	    rpOptions: [1, 2, 4, 8, 16, 32, 64], 
-	    onSuccess: flexfixall,
-	    onDragCol: flexfixall,
-	    params: xp,
-	    canRearrange: false,
+        opts = {
+            url: options['url'],
+            dataType: 'json',
+            colModel: model,
+            usepager: true,
+            resizableVForce: true,
+            useRp: true,
+            unselectable: true,
+            showToggleBtn: false,
+            rp: 4,
+            rpOptions: [1, 2, 4, 8, 16, 32, 64],
+            onSuccess: flexfixall,
+            onDragCol: flexfixall,
+            params: xp,
+            canRearrange: false,
             pagestat: __t('Displaying {from} to {to} of {total} items'),
             pagetext: __t('Page'),
-	    outof: __t('out of'),
+            outof: __t('out of'),
             procmsg:__t( 'Processing, please wait ...')
-	};
-	if ('flparams' in options) 
-	    for (optname in options['flparams'])
-		opts[optname] = options['flparams'][optname];
-	hflex[options['id']] = $('#' + options['id'] + ' span.pyflex').flexigrid(opts);
-	$('#' + options['id']).resizable({handles:'e'});
+        };
+        if ('flparams' in options){
+            for (optname in options['flparams']){
+                opts[optname] = options['flparams'][optname];
+            }
+        }
+
+        hflex[options['id']] = $('#' + options['id'] + ' span.pyflex').flexigrid(opts);
+        $('#' + options['id']).resizable({handles:'e'});
     });
 }
 
 function historyClick(id,thename) {
     $('#pbhistory'+id).toggle();
-    //console.log('c');
     createNow = !$('#pbhistory'+id).is(":hidden") && ($('#pbhistory' + id + ' .flexigrid').length == 0);
-    //console.log('C');
     if (createNow) {
-	var url = HISTORYURL;
-	pyflex({'id':'pbhistory'+id, 'url':url, 'dbparams':{'p': thename}, 'flparams':{'showCloseBtn':true}});
+        var url = HISTORYURL;
+        pyflex({'id':'pbhistory'+id, 'url':url, 'dbparams':{'p': thename}, 'flparams':{'showCloseBtn':true}});
     }
-    if ($('#pbhistory'+id).is(":hidden")) 
-	setCommandLabel(id, 'history', __t('History'));
-    else {
-	setCommandLabel(id, 'history', __t('Hide history'));
-	if (!createNow) hflex['pbhistory'+id].flexReload();
+    if ($('#pbhistory'+id).is(":hidden")){
+        setCommandLabel(id, 'history', __t('History'));
+    }else {
+	    setCommandLabel(id, 'history', __t('Hide history'));
+	    if (!createNow){
+            hflex['pbhistory'+id].flexReload();
+        }
     }
 }
 
@@ -590,31 +623,31 @@ function descape(S) {
 
 function toggleSibling(event) {
     var con = $(this).parents('.collapseContain'); // .collapseContain
-//    console.log(con.size(), con);
     var hideNow = con.hasClass("showing");
     if (!hideNow) {
-	var accord = $(this).parents('.accordion').find('.collapseContain.showing');
-	accord.children('.collapseBody').slideUp();
-	accord.removeClass('showing');
-	accord.addClass('hiding');
-	con.children('.collapseBody').slideDown();
-	con.removeClass('hiding');
-	con.addClass('showing');
-    }
-    else {
-	con.children('.collapseBody').slideUp();
-	con.removeClass('showing');
-	con.addClass('hiding');
+        var accord = $(this).parents('.accordion').find('.collapseContain.showing');
+        accord.children('.collapseBody').slideUp();
+        accord.removeClass('showing');
+        accord.addClass('hiding');
+        con.children('.collapseBody').slideDown();
+        con.removeClass('hiding');
+        con.addClass('showing');
+    }else {
+        con.children('.collapseBody').slideUp();
+        con.removeClass('showing');
+        con.addClass('hiding');
     }
     return false;
 }
 
 registerClick('.quoth', quoteIt);
+
 function quoteIt(event) {
     $('#mailform').insertAfter($(this).parents('.collapseContain'));
     var text = undo_htmlspecialchars($(this).parents('.collapseContain').find('pre').html());
     var currreply = $('#mailform').find('textarea').val();
-    if (currreply.substring(-1, 0)=="\n") currreply = substring(currreply(0, -1));
+    if (currreply.substring(-1, 0)=="\n")
+        currreply = substring(currreply(0, -1));
     currreply += ("\n"+text).replace(/\n/g, "\n>");
     $('#mailform').find('textarea').val(currreply);
 }
@@ -629,20 +662,20 @@ function undo_htmlspecialchars(S) {
 $( // this call to $ makes it delay until the DOM is loaded
     function() {   
 
-      registerClick('.collapseHead', toggleSibling);
+        registerClick('.collapseHead', toggleSibling);
 
-      $('.collapseContain.showing > .collapseBody').css('display', 'block'); // fix weird bug with diappearing instead of sliding
+        $('.collapseContain.showing > .collapseBody').css('display', 'block'); // fix weird bug with diappearing instead of sliding
 
-      if (typeof justVisualizing === 'undefined') {
-        $('ul.pyscramble').sortable({containment: "parent"});
-	$('.resizy').resizable({handles:'s',minHeight:50});
+        if (typeof justVisualizing === 'undefined') {
+            $('ul.pyscramble').sortable({containment: "parent"});
+	        $('.resizy').resizable({handles:'s',minHeight:50});
 
-	if (window.location.hash) {
-	    setTimeout("window.scrollBy(0, -60)", 10); // so direct links aren't hidden by adminbar
-	} 
+	        if (window.location.hash) {
+	            setTimeout("window.scrollBy(0, -60)", 10); // so direct links aren't hidden by adminbar
+	        }
 
-	$("#wp-admin-bar-site-name").after($("#pylangswitcher li"));
-	$("#pylangswitcher").remove();
+	        $("#wp-admin-bar-site-name").after($("#pylangswitcher li"));
+	        $("#pylangswitcher").remove();
       }
       flexfixall();
     }

@@ -2,49 +2,56 @@
 
 // utility functions available within the plugin
 
-  // process raw content (used for example in nested shortcodes)
+// process raw content (used for example in nested shortcodes)
 function do_short_and_sweetcode($x) {
-  return do_shortcode(do_sweetcode($x));
+    return do_shortcode(do_sweetcode($x));
 }
 
 // useful 
 
 // translation
 function __t($en_string) {
-  return __($en_string, 'cscircles');// . get_locale(); // for debugging
+    return __($en_string, 'cscircles');// . get_locale(); // for debugging
 }
 
 function translateOf($string, $translations) {
-  $translations = explode("\n", $translations);
-  for ($i=0; $i<count($translations)/2; $i++) {
-    $en = $translations[2*$i];
-    $trans = $translations[2*$i+1];
-    $string = str_replace($en, $trans, $string);
-  }
-  return $string;
+    $translations = explode("\n", $translations);
+    for ($i = 0; $i < count($translations) / 2; $i++) {
+        $en     = $translations[2 * $i];
+        $trans  = $translations[2 * $i + 1];
+        $string = str_replace($en, $trans, $string);
+    }
+    return $string;
 }
 
 function tabs_to_spaces($width, $text) {
-  if (strpos($text, "\t") === FALSE) return $text;
-  $lines = explode("\n", $text); // thankfully this works for \r\n too
-  $result = "";
-  foreach ($lines as $line) {
-    $i = 0;
-    $indent = 0;
-    while ($i < strlen($line) and ($line[$i] == ' ' or $line[$i] == "\t")) {
-      if ($line[$i] == " ") $indent++;
-      else {$indent += $width; $indent -= $indent % $width;}
-      $i++;
+    if (strpos($text, "\t") === FALSE)
+        return $text;
+    $lines  = explode("\n", $text); // thankfully this works for \r\n too
+    $result = "";
+    foreach ($lines as $line) {
+        $i      = 0;
+        $indent = 0;
+        while ($i < strlen($line) and ($line[$i] == ' ' or $line[$i] == "\t")) {
+            if ($line[$i] == " ")
+                $indent++;
+            else {
+                $indent += $width;
+                $indent -= $indent % $width;
+            }
+            $i++;
+        }
+        $result .= str_repeat(' ', $indent);
+        $result .= substr($line, $i);
+        $result .= "\n";
     }
-    $result .= str_repeat(' ', $indent);
-    $result .= substr($line, $i);
-    $result .= "\n";
-  }
-  return $result;
+    return $result;
 }
 
 /**
- * given a term describing a link to a special page,get the URL to the (properly translated) real location
+ * given a term describing a link to a special page,get the URL to
+ * the (properly translated) real location
+ *
  * @param $desc
  *
  * @return array|false|mixed|string|string[]|void|WP_Error
@@ -117,7 +124,8 @@ function pb_mail($from, $to, $subject, $body) {
     //pyboxlog("message sent [$from|$to|$subject|" . stream_get_contents($pipes[1]) .'|'.stream_get_contents($pipes[2]).']', 1);
     fclose($pipes[1]);
     fclose($pipes[2]);
-    if (proc_close($process) == 0) $sent = TRUE;
+    if (proc_close($process) == 0)
+        $sent = TRUE;
   } 
   if (!$sent) {
     pyboxlog( "Used fallback for pb_mail: $ensemble", TRUE );
@@ -180,41 +188,41 @@ function userIsTranslator() {
 }
 
 function nicefiedUsername($uid, $short = TRUE) {
-  if (($uid == 0 && userIsAdmin()) || ($uid == getUserID())) 
-    return __t('me');
-  elseif ($uid == 0 || in_array($uid, unserialize(CSCIRCLES_ASST_ID_MAP)))
-    return $short ? __t('Asst.') : __t('CS Circles Assistant');
-  else
-    return userNickOrUserLogin($uid);
+    if (($uid == 0 && userIsAdmin()) || ($uid == getUserID()))
+        return __t('me');
+    elseif ($uid == 0 || in_array($uid, unserialize(CSCIRCLES_ASST_ID_MAP)))
+        return $short ? __t('Asst.') : __t('CS Circles Assistant');
+    else
+        return userNickOrUserLogin($uid);
 }
 
 function guruIDID($id) {
-  $tmp = get_user_by('login', get_the_author_meta('pbguru', $id));  
-  return ($tmp === FALSE) ? -1 : $tmp->ID;
+    $tmp = get_user_by('login', get_the_author_meta('pbguru', $id));
+    return ($tmp === FALSE) ? -1 : $tmp->ID;
 }
 
 function rightNowString() { // in format beloved by SQL
-  date_default_timezone_set('America/New_York');
-  return date("y-m-d H:i:s", time());
+    date_default_timezone_set('America/New_York');
+    return date("y-m-d H:i:s", time());
 }
 
 // see also: newuserwelcome
 //           pybox.css reference to header background
 
 function getUserID() {
-  $u = wp_get_current_user();
-  return empty($u->ID) ? -1 : $u->ID;
+    $u = wp_get_current_user();
+    return empty($u->ID) ? -1 : $u->ID;
 }
 
 // 2-character code for current language
 // doesn't work in Dashboard/Admin pages
 function currLang2() {
-  return class_exists('PLL_Base') ? pll_current_language() : substr(get_bloginfo("language"), 0, 2);
+    return class_exists('PLL_Base') ? pll_current_language() : substr(get_bloginfo("language"), 0, 2);
 }
 
 // same, but like en_US or fr_FR
 function currLang4() {
-  return class_exists('PLL_Base') ? pll_current_language("locale") : get_bloginfo("language");
+    return class_exists('PLL_Base') ? pll_current_language("locale") : get_bloginfo("language");
 }
 
 // write to log, and send an e-mail
@@ -492,7 +500,7 @@ function returnfromprofile() {
  * @return mixed
  */
 function getSoft($array, $key, $default) {
-    if (array_key_exists($key, $array))
+    if (is_array($array) && array_key_exists($key, $array))
         return $array[$key];
     return $default;
 }

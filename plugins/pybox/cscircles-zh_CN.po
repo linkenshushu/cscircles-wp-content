@@ -308,7 +308,7 @@ msgstr "没有任何提交的记录。"
 #: ../wp-plugin/db-entire-history.php:115 ../wp-plugin/db-problem-history.php:75
 #: ../wp-plugin/shortcode-mailpage.php:241
 msgid "n/a"
-msgstr "不适用"
+msgstr "n/a"
 
 #: ../wp-plugin/db-mail.php:39
 msgid "You must log in to view past mail."
@@ -781,7 +781,7 @@ msgstr "所有关于我的消息"
 #: ../wp-plugin/shortcode-mailpage.php:202
 #, php-format
 msgid "View mail with one of your students? (you have %s)"
-msgstr "查看你的学生发来的邮件? (你有 %s)"
+msgstr "查看学生邮件(有 %s 封)"
 
 #: ../wp-plugin/shortcode-mailpage.php:204
 msgid "Me"
@@ -797,16 +797,16 @@ msgstr "提交"
 
 #: ../wp-plugin/shortcode-my-progress.php:9
 msgid "You must login to view your user page."
-msgstr "你必须登录才能查看你的用户页面。"
+msgstr "必须登录才能查看用户页面。"
 
 #: ../wp-plugin/shortcode-my-progress.php:36
 #, php-format
 msgid "View one of your students? (you have %s)"
-msgstr "查看你的学生? (你有 %s)"
+msgstr "查看学生列表 (有 %s 名)"
 
 #: ../wp-plugin/shortcode-my-progress.php:38
 msgid "Show only me"
-msgstr "只显示我"
+msgstr "仅显示自己"
 
 #: ../wp-plugin/shortcode-my-progress.php:39
 msgid "Summary of all my students"
@@ -814,7 +814,7 @@ msgstr "我所有学生的摘要"
 
 #: ../wp-plugin/shortcode-my-progress.php:55
 msgid "Just show submissions for one problem?"
-msgstr "只显示一个问题的提交？"
+msgstr "查看问题的提交"
 
 #: ../wp-plugin/shortcode-my-progress.php:57
 msgid "Show all"
@@ -835,26 +835,35 @@ msgstr "无效的用户ID。"
 #: ../wp-plugin/shortcode-my-progress.php:101
 #, php-format
 msgid "Now viewing %s for "
-msgstr "现在正查看%s 为"
+msgstr "正在查看[ %s ],完成人是: "
 
 #: ../wp-plugin/shortcode-my-progress.php:104
 #, php-format
 msgid "Now viewing %s for all of your students"
-msgstr "查看你所有的学生的%s"
+msgstr "查看你所有的学生的[ %s ]"
+
+msgid "all problems"
+msgstr "所有题目"
 
 #: ../wp-plugin/shortcode-my-progress.php:117
 #, php-format
 msgid "Solutions by my students for %s"
-msgstr "学生为 %s 做的答案"
+msgstr "学生为[ %s ]做的答案"
 
 #: ../wp-plugin/shortcode-my-progress.php:129
 msgid "Submitted code"
 msgstr "已提交的代码"
 
+msgid "last correct"
+msgstr "上一次成功"
+
+msgid "first correct"
+msgstr "第一次成功"
+
 #: ../wp-plugin/shortcode-my-progress.php:130
 #, php-format
 msgid "Submitted code for %s"
-msgstr "%s 的已提交代码"
+msgstr "[ %s ]的已提交代码"
 
 #: ../wp-plugin/shortcode-my-progress.php:142
 msgid "Latest problems completed"
@@ -864,13 +873,28 @@ msgstr "最近完成的问题"
 msgid "List of all problems"
 msgstr "所有问题的列表"
 
+msgid "Student listing (click name to drill down)"
+msgstr "学生列表（点击姓名查看详情）"
+
+msgid " submissions"
+msgstr " 次提交"
+
+msgid " completed"
+msgstr " 次完成"
+
+msgid "Click on the "
+msgstr "点击"
+
+msgid " to drill down."
+msgstr "查看详情"
+
 #: ../wp-plugin/shortcode-my-progress.php:222
 msgid "(with #completed)"
-msgstr "(有 #个已完成)"
+msgstr "(有 # 次已完成)"
 
 #: ../wp-plugin/shortcode-my-progress.php:222
 msgid "(with #submissions)"
-msgstr "(有 #份提交)"
+msgstr "(有 # 次提交)"
 
 #: ../wp-plugin/shortcodes-exercises.php:36
 #, php-format

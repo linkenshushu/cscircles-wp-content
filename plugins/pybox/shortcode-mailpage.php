@@ -244,25 +244,40 @@ function reselector(&$students, $cstudents) {
   return $preamble;
 }
 
+/**
+ * Let flex layout more nice
+ * @param $id  Did ID
+ * @param $title  Div Title
+ * @param $fileSuffix  File suffiex
+ * @param $functionName  Name of function
+ * @param $dbparams  Parameter of db
+ *
+ * @return string
+ */
 function niceFlex($id, $title, $fileSuffix, $functionName, $dbparams) {
-  
-  include_once("db-$fileSuffix.php");
-  $dbparams["lang"] = currLang4();
-  $url = UDBPREFIX . $fileSuffix . ".php";
-  $query_result = call_user_func($functionName," limit 0,0", '', '', $dbparams);
-  if (is_string($query_result))
-    $rows = __t("n/a");
-  else
-    $rows = $query_result['total'];
 
-  return "<div class='collapseContain hiding' id='cc$id'>
-<div class='collapseHead' id='ch$id'><span class='icon'></span>$title ($rows)</div>
-<div class='collapseBody' id='cb$id'></div></div>
-<script type='text/javascript'>
-jQuery('#ch$id').click(function(e) {
-  if (0==jQuery('#cb$id .flexigrid').size()) pyflex({'id':'cb$id', 'url':'$url', 'dbparams':".json_encode($dbparams)."});
-});
-</script>";
+    include_once("db-$fileSuffix.php");
+    $dbparams["lang"] = currLang4();
+    $url              = UDBPREFIX . $fileSuffix . ".php";
+    $query_result     = call_user_func($functionName, " limit 0,0", '', '', $dbparams);
+
+    if (is_string($query_result))
+        $rows = __t("n/a");
+    else
+        $rows = $query_result['total'];
+
+    return "<div class='collapseContain hiding' id='cc$id'>
+                <div class='collapseHead' id='ch$id'>
+                    <span class='icon'></span>$title ($rows)
+                </div>
+                <div class='collapseBody' id='cb$id'></div>
+            </div>
+            <script type='text/javascript'>
+            jQuery('#ch$id').click(function(e) {
+                if (0==jQuery('#cb$id .flexigrid').size()) 
+                    pyflex({'id':'cb$id', 'url':'$url', 'dbparams':" . json_encode($dbparams) . "});
+            });
+            </script>";
 }
 
 // end of file
